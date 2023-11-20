@@ -1,0 +1,65 @@
+Huffman Tree:
+if : 0.047, Branch: 
+i : 0.01, Branch: 0
+f : 0.037, Branch: 1
+hif : 0.08399999999999999, Branch: 
+h : 0.037, Branch: 0
+if : 0.047, Branch: 1
+i : 0.01, Branch: 10
+f : 0.037, Branch: 11
+gc : 0.106, Branch: 
+g : 0.053, Branch: 0
+c : 0.053, Branch: 1
+hifgc : 0.19, Branch: 
+hif : 0.08399999999999999, Branch: 0
+h : 0.037, Branch: 00
+if : 0.047, Branch: 01
+i : 0.01, Branch: 010
+f : 0.037, Branch: 011
+gc : 0.106, Branch: 1
+g : 0.053, Branch: 10
+c : 0.053, Branch: 11
+ehifgc : 0.327, Branch: 
+e : 0.137, Branch: 0
+hifgc : 0.19, Branch: 1
+hif : 0.08399999999999999, Branch: 10
+h : 0.037, Branch: 100
+if : 0.047, Branch: 101
+i : 0.01, Branch: 1010
+f : 0.037, Branch: 1011
+gc : 0.106, Branch: 11
+g : 0.053, Branch: 110
+c : 0.053, Branch: 111
+bd : 0.392, Branch: 
+b : 0.196, Branch: 0
+d : 0.196, Branch: 1
+aehifgc : 0.6080000000000001, Branch: 
+a : 0.281, Branch: 0
+ehifgc : 0.327, Branch: 1
+e : 0.137, Branch: 10
+hifgc : 0.19, Branch: 11
+hif : 0.08399999999999999, Branch: 110
+h : 0.037, Branch: 1100
+if : 0.047, Branch: 1101
+i : 0.01, Branch: 11010
+f : 0.037, Branch: 11011
+gc : 0.106, Branch: 111
+g : 0.053, Branch: 1110
+c : 0.053, Branch: 1111
+bdaehifgc : 1.0, Branch: 
+bd : 0.392, Branch: 0
+b : 0.196, Branch: 00
+d : 0.196, Branch: 01
+aehifgc : 0.6080000000000001, Branch: 1
+a : 0.281, Branch: 10
+ehifgc : 0.327, Branch: 11
+e : 0.137, Branch: 110
+hifgc : 0.19, Branch: 111
+hif : 0.08399999999999999, Branch: 1110
+h : 0.037, Branch: 11100
+if : 0.047, Branch: 11101
+i : 0.01, Branch: 111010
+f : 0.037, Branch: 111011
+gc : 0.106, Branch: 1111
+g : 0.053, Branch: 11110
+c : 0.053, Branch: 11111
