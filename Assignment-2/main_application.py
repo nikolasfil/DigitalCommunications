@@ -21,7 +21,7 @@ def main():
     n_info = print_n_info(r_value,h_value)
     
 
-    # Assignment 2 
+    # ----------------------- Assignment 2 -------------------- 
     assignment_2_header = "\n\n## Assignment-2\n\n"
 
     combinations_info,combinations_dict = get_combinations(output)
@@ -32,11 +32,18 @@ def main():
 
     huffman_r_info, huffman_r_value = print_R_info(huffman_encoded_value,combinations_dict)
     
+    huffman_h_info = "$$\n H(x) = 2 H(x) = 2 \cdot "+f"{h_value} = {2*h_value} \n$$\n\nH(x) = {2*h_value}\n"
 
-    # General
+    huffman_n_info = print_n_info(huffman_r_value,2*h_value)
 
-    lst = [assignment_1_header,pretty_codes,i_info,h_info,r_info,n_info, assignment_2_header,combinations_info,
-           huffman_encoded_info,huffman_r_info
+
+
+    # ----------------------- General ----------------------- 
+
+    lst = [assignment_1_header,pretty_codes,i_info,h_info,r_info,n_info, 
+           assignment_2_header,combinations_info,
+           huffman_encoded_info,huffman_r_info,
+           huffman_h_info,huffman_n_info
            ]
 
     result = "\n\n".join(lst)
