@@ -112,13 +112,13 @@ def print_R_info(codes,output):
     return R,val
 
 
-def print_n_info(r,h):
+def print_n_info(r,h,pairs=1):
     h = float(h)
     r = float(r)
-    val = round(h/r,3)
-    result ="$$\n n = \\frac{H(x)}{R} = "+"\\frac{"+f"{h}"+"}{"+f"{r}"+"}"+f" = {val} = {val*100}\\ \% \n$$\n\n n = {val} " 
+    val = round(pairs*h/r,3)
+    result ="$$\n n = \\frac{"+f"{pairs if pairs !=1 else ''}"+"H(x)}{R} = "+"\\frac{"+f"{pairs*h}"+"}{"+f"{r}"+"}"+f" = {val} = {val*100}\\ \% \n$$\n\n n = {val} " 
     # result =f"n = H(x)/R = {h}/{r} = {val}" 
-    return result 
+    return result ,val
 
 
 def get_combinations(output):
@@ -130,7 +130,22 @@ def get_combinations(output):
     for key in result_list:
         result_dict["".join(key)] = round(output[key[0]]*output[key[1]],3)
 
-    result = "| Combination | Probability |\n"
+    result = "\n\n| Combination | Probability |\n"
+    for key,value in result_dict.items():
+        result += f"| {key} | {value} |\n" 
+    return result,result_dict
+
+
+def get_combinations_different(output1,output2):
+    result_list = [] 
+    for key_a in output1.keys():
+        for key_b in output2.keys():
+            result_list.append((key_a,key_b))
+    result_dict = {}
+    for key in result_list:
+        result_dict["".join(key)] = round(output1[key[0]]*output2[key[1]],3)
+
+    result = "\n\n| Combination | Probability |\n"
     for key,value in result_dict.items():
         result += f"| {key} | {value} |\n" 
     return result,result_dict
@@ -141,14 +156,16 @@ def write_to_file(listing):
         f.write(listing)
 
 
-def huffman_encode_two_pair(combinations_dict):
+def huffman_encode_pairs(combinations_dict,pairs=2):
+    """Returns the encoded huffman codes for the combinatios of x pairs"""
     result = ""
     huffman_encoded = huffman_encoding(combinations_dict)
-    huffman_four_encoded = {key:value for key,value in huffman_encoded.items() if len(key)==4}
-    for key in sorted(huffman_four_encoded.keys()):
-        temp_result = f"{key} : {huffman_four_encoded[key]}"
+    huffman_pairs_encoded = {key:value for key,value in huffman_encoded.items() if len(key)==2*pairs}
+    result = "\n\n| Combination | Code |\n"
+    for key in sorted(huffman_pairs_encoded.keys()):
+        temp_result = f"| {key} | {huffman_pairs_encoded[key]} | "
         result += temp_result + "\n"
 
-    return result,huffman_four_encoded
+    return result,huffman_pairs_encoded
 
 
