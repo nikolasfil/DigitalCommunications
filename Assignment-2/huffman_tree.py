@@ -19,8 +19,7 @@ def build_huffman_tree(symbol_freq):
     heap = [HuffmanNode(symbol, freq) for symbol, freq in symbol_freq.items()]
     heapq.heapify(heap)
 
-    with open("huffman_tree.txt", "w") as f:
-        f.write("Huffman Tree:\n")
+
 
     while len(heap) > 1:
         node1 = heapq.heappop(heap)
@@ -31,6 +30,7 @@ def build_huffman_tree(symbol_freq):
         merged_node.right = node2
 
         heapq.heappush(heap, merged_node)
+
         print_huffman_tree(merged_node, "")
 
     return heap[0]
@@ -49,10 +49,10 @@ def build_huffman_codes(node, code="", mapping=None):
 
 def print_huffman_tree(node, branch):
     if node.symbol is not None:
-        result = f"{node.symbol} : {node.freq}, Branch: {branch}"
+        result = f"{node.symbol}:{node.freq},{branch}"
         with open("huffman_tree.txt", "a") as f:
             f.write(f"{result}\n")
-        print(result)
+        # print(result)
     if node.left is not None:
         print_huffman_tree(node.left, branch + "0")
     if node.right is not None:
@@ -73,10 +73,11 @@ if __name__ == "__main__":
     symbol_probabilities = {'a1a1': 0.281, 'a1a2': 0.196, 'a1a3': 0.053,
                             'a2a1': 0.196, 'a2a2': 0.137, 'a2a3': 0.037,
                             'a3a1': 0.053, 'a3a2': 0.037, 'a3a3': 0.01}
-
+    with open("huffman_tree.txt", "w") as f:
+        f.write("Huffman Tree:\n")
     huffman_codes = huffman_encoding(symbol_probabilities)
 
-    for symbol, code in huffman_codes.items():
-        print(f"{symbol}: {code}")
+    # for symbol, code in huffman_codes.items():
+    #     print(f"{symbol}: {code}")
 
 

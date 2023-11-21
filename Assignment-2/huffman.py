@@ -1,4 +1,5 @@
 import math 
+from huffman_tree import *
 
 def huffman(output):
     # output: dictionary of output symbols and their probabilities
@@ -106,6 +107,7 @@ def print_R_info(codes,output):
         R+=f"{output[key]} \cdot {len(str(value))} + "
         val += output[key]*len(str(value))
     R = R[:-2]
+    val = round(val,3)
     R+= f" = {val} \n$$ \n\nR(x) = {val}\n"
     return R,val
 
@@ -138,5 +140,15 @@ def write_to_file(listing):
     with open("code_result.md","w", encoding="UTF-8") as f:
         f.write(listing)
 
+
+def huffman_encode_two_pair(combinations_dict):
+    result = ""
+    huffman_encoded = huffman_encoding(combinations_dict)
+    huffman_four_encoded = {key:value for key,value in huffman_encoded.items() if len(key)==4}
+    for key in sorted(huffman_four_encoded.keys()):
+        temp_result = f"{key} : {huffman_four_encoded[key]}"
+        result += temp_result + "\n"
+
+    return result,huffman_four_encoded
 
 

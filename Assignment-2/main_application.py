@@ -27,24 +27,17 @@ def main():
     combinations_info,combinations_dict = get_combinations(output)
 
 
-    combinations_single_letter = change_to_single_letter(combinations_dict)
-
-    c_dict_original = change_to_numbering(combinations_single_letter,combinations_dict)
+    huffman_encoded_info, huffman_encoded_value = huffman_encode_two_pair(combinations_dict)
 
 
-    # codes_2 = huffman(combinations_single_letter)
+    huffman_r_info, huffman_r_value = print_R_info(huffman_encoded_value,combinations_dict)
     
-    # codes_2 = change_to_numbering(codes_2,combinations_dict)
-
-    # print(codes_2)
-
-    huffman_encoded = huffman_encoding(combinations_single_letter)
-    # print(huffman_encoded)
-
 
     # General
 
-    lst = [assignment_1_header,pretty_codes,i_info,h_info,r_info,n_info, assignment_2_header,combinations_info]
+    lst = [assignment_1_header,pretty_codes,i_info,h_info,r_info,n_info, assignment_2_header,combinations_info,
+           huffman_encoded_info,huffman_r_info
+           ]
 
     result = "\n\n".join(lst)
 
