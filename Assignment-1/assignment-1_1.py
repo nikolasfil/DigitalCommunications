@@ -26,21 +26,15 @@ def print_table(dict_of_interest,letter_frequency):
     N = sum(dict_of_interest.values())
 
     # printing the table
-    ll = len('Letter')
-    lc = len('Count')
-    li = len('I= -log2(P)')
-    lp = len('P = Count/N')
+    ll,lc,li,lp = len('Letter'),len('Count'),len('I= -log2(P)'),len('P = Count/N')
 
     for key,value in dict_of_interest.items():
         lc = max(lc,len(str(value)))
         li = max(li,len(str(-1*math.log2(value/N))))
         lp = max(lp,len(str(value/N)))
+    
     # the table headers
-
     result =[ f'| {"Letter":^{1}} | {"Count":^{lc}} | {"P = Count/N":^{lp}} | {"I= -log2(P)":^{li+1}} |']
-
-    # ln = ll+lc+lp
-
 
     for key,value in dict_of_interest.items():
         
@@ -52,13 +46,14 @@ def print_table(dict_of_interest,letter_frequency):
         result.append(f'| {letter} | {frequency} | {information} | {probability} |')
 
 
-          
     # printing the total number of letters
     result.append(f'| {"Number of Letters"} | {N:^{li}} | | | ' )
     
     # printing the total number of symbols
     result.append(f'| {"Number of Symbols"} | {letter_frequency["symbol"]:^{li}} | | | ' )
-  
+    
+    result.append(f'| {"Number of Characters"} | {letter_frequency["symbol"]+N:^{li}} | | | ' )
+
     return result
 
 def main():
@@ -77,8 +72,10 @@ def main():
     
     print('\n'.join(result))
 
+    with open('assignment-1-code-result.md','w') as file:
+        file.write('\n\n')
+        file.write('\n'.join(result))
+
     
-
-
 if __name__ == '__main__':
     main()
