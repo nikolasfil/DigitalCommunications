@@ -41,8 +41,7 @@ def print_table(dict_of_interest,letter_frequency):
 
     return result
 
-def main():
-
+def sharing_data():
     # list of the characters that interest us 
     letters_of_interest=['L','h','l','H','s','n','w']
     # dictionary with the frequency of each letter in the file
@@ -52,14 +51,25 @@ def main():
     # dictionary with the frequency of each letter of interest
     dict_of_interest = letters_of_interest_frequency(letters_of_interest,letter_frequency)
 
+    return letters_of_interest, letter_frequency, dict_of_interest
+
+def save_to_file(file_name,result):
+    with open(file_name,'w') as file:
+        file.write('\n\n')
+        file.write('\n'.join(result))
+
+def main():
+    
+
+    letters_of_interest, letter_frequency, dict_of_interest = sharing_data()
+
+    
     # printing the table
     result = print_table(dict_of_interest,letter_frequency)
     
     print('\n'.join(result))
 
-    with open('assignment-1-code-result.md','w') as file:
-        file.write('\n\n')
-        file.write('\n'.join(result))
+    save_to_file('assignment-1-1-code-result.md',result)
 
     
 if __name__ == '__main__':
