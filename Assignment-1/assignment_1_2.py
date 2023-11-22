@@ -7,7 +7,11 @@ def H(list_of_probabilities):
     
     h_value = - sum([p*math.log2(p) for p in list_of_probabilities])
     
-    h_info = "\n $$\nH(X) = -\sum_{i=1}^{"+f"{len(list_of_probabilities)}"+"}p_i\log_2(p_i) ="+f"{h_value}\n$$\n"
+    h_info = "$$\nH(X) = -\sum_{i=1}^{"+f"{len(list_of_probabilities)}"+"}p_i\log_2(p_i)"
+    
+    h_info+= f" = - (1/{len(list_of_probabilities)}) \cdot {len(list_of_probabilities)} \cdot \log_2(1/{len(list_of_probabilities)})" 
+
+    h_info+=f" = {h_value}\n$$\n\nH(x) = {h_value}\n\n"
 
     return h_info,h_value
 
@@ -19,6 +23,9 @@ def main():
 
     # Assignment 1.2
     # h_info, h_value = H(letter_frequency.values()) 
+
+
+    # removing the symbol from the dictionary
     letter_frequency = {key:value for key,value in letter_frequency.items() if key != 'symbol'}
     # h_info, h_value = H([value/sum(letter_frequency.values()) for value in letter_frequency.values()]) 
     N = len(letter_frequency.keys())
@@ -26,6 +33,10 @@ def main():
 
 
     result.append(h_info)
+
+
+
+    # ------------------
 
     save_to_file('assignment-1-2-code-result.md',result)
 
