@@ -4,7 +4,7 @@ from collections import defaultdict
 import math
 
 
-def getting_info_from_file(file):
+def getting_info_from_file(file,individual=False):
     """This function will return a dictionary with the frequency of each letter in the file"""
     letter_frequency=defaultdict(int)
     with open('poem.txt','r') as file:
@@ -13,9 +13,12 @@ def getting_info_from_file(file):
                 if letter.isalpha():
                     letter_frequency[letter]+=1
                 elif letter!='\n':
+                    if individual:
+                        letter_frequency[letter]+=1
                     letter_frequency["symbol"]+=1
     return letter_frequency
     
+
 def letters_of_interest_frequency(letters_of_interest,letter_frequency):
     """This function will return a dictionary with the frequency of each letter of interest of a given dictionary"""
     return {key:letter_frequency[key] for key in letters_of_interest}
@@ -23,13 +26,14 @@ def letters_of_interest_frequency(letters_of_interest,letter_frequency):
 
 def print_table(dict_of_interest,letter_frequency):
     # total number of letters in the file
-    N = sum(dict_of_interest.values())
+    N = sum(letter_frequency.values())
 
     # the table headers
     result =[ f'| Letter | Count | P = Count/N | I= -log2(P) |']
 
     for key,value in dict_of_interest.items():
-        
+        if key == 'symbol':
+            continue
         information = f'{(-1*math.log2(value/N))}'
         probability = f'{value/N}'
 
@@ -41,11 +45,11 @@ def print_table(dict_of_interest,letter_frequency):
 
     return result
 
-def sharing_data():
+def sharing_data(letters_of_interest,poem_file,individual=False):
     # list of the characters that interest us 
-    letters_of_interest=['L','h','l','H','s','n','w']
+    # letters_of_interest=
     # dictionary with the frequency of each letter in the file
-    letter_frequency=getting_info_from_file('poem.txt')
+    letter_frequency=getting_info_from_file(poem_file,individual)
     
   
     # dictionary with the frequency of each letter of interest
@@ -61,7 +65,7 @@ def save_to_file(file_name,result):
 def main():
     
 
-    letters_of_interest, letter_frequency, dict_of_interest = sharing_data()
+    letters_of_interest, letter_frequency, dict_of_interest = sharing_data(['L','h','l','H','s','n','w'],'poem.txt')
 
     
     # printing the table
