@@ -1,2 +1,10 @@
-    table = print_table(letter_frequency ,letter_frequency)
-    print(table)
+ossible_combinations = {
+        "x=0": 0.7,
+        "x=1": 0.3,
+        "y=0": 0.515,
+        "y=1": 0.485,
+        "y=0|x=0": 0.65,
+        "y=0|x=1": 0.2,
+        "y=1|x=0": 0.35,
+        "y=1|x=1": 0.8,
+    }
