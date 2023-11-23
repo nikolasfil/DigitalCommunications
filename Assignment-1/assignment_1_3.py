@@ -46,7 +46,7 @@ def print_ambiguous_table(dict):
     # f'| {"Combination":^{ln}} | {"P":^{ln}} | {"I":^{ln}} | {"Value":^{ln}} |\n'
 
     for key_d, value_d in doubles.items():
-        temp = f'$$ I{key_d.replace("|", ";")} = \log_' + "{2}"
+        temp = f'$$ I({key_d.replace("|", ";")}) = \log_' + "{2}"
 
         temp += "\left(\\frac" + "{" + f"P({key_d})" + "}{"
         temp += f'P({key_d.split("|")[0]})' + "}\\right) ="
