@@ -28,8 +28,12 @@ def print_table(dict_of_interest,letter_frequency):
     # total number of letters in the file
     N = sum(letter_frequency.values())
 
+
+    # beautifying
+    ln = len('Number of Characters')+2
+
     # the table headers
-    result =[ f'| Letter | Count | P = Count/N | I= -log2(P) |']
+    result =[ f'| {"Letter"} | {"Count"} | {"P = Count/N"} | {"I= -log2(P)"} |']
 
     for key,value in dict_of_interest.items():
         if key == 'symbol':

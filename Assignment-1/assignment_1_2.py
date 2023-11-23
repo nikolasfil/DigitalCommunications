@@ -16,33 +16,16 @@ def H(list_of_probabilities):
     return h_info,h_value
 
 
-def H_singular(list_of_probabilities):
-    """This function will return the entropy of a given probability"""
-    import math
-    
-    h_value = - sum([p*math.log2(p) for p in list_of_probabilities])
-    
-    h_info = "$$\nH(X) = -\sum_{i=1}^{"+f"{len(list_of_probabilities)}"+"}p_i\log_2(p_i)"
-    
-    h_info+= f" = - (1/{len(list_of_probabilities)}) \cdot {len(list_of_probabilities)} \cdot \log_2(1/{len(list_of_probabilities)})" 
-
-    h_info+=f" = {h_value}\n$$\n\nH(x) = {h_value}\n\n"
-
-    return h_info,h_value
     
 
 def main():
     letters_of_interest, letter_frequency, dict_of_interest = sharing_data(['L','h','l','H','s','n','w'],'poem.txt',True)
     result = []
 
-    # print(letter_frequency)
-    # Assignment 1.2
-    # h_info, h_value = H(letter_frequency.values()) 
 
-
-    table = print_table(letter_frequency ,letter_frequency)
+    table_self_information_whole = print_table(letter_frequency ,letter_frequency)
     # print()
-    result.append('\n'.join(table)+'\n\n')
+    result.append('\n'.join(table_self_information_whole)+'\n\n')
 
     # removing the symbol from the dictionary
     letter_frequency = {key:value for key,value in letter_frequency.items() if key != 'symbol'}
