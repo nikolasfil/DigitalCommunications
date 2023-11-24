@@ -1,6 +1,7 @@
 import math
 from assignment_2_huffman_functions import *
 from efficiency_plotter import *
+from huffman_brancher import *
 
 
 def save_to_file(file_name, result):
@@ -194,6 +195,10 @@ def main():
 
     huffman_n_info, huffman_n_value = n_info(huffman_r_value, huffman_h_value)
     result.append(huffman_n_info)
+
+    lines = get_huffman_lines()
+    resulting_nodes, noding = splitting_huffman_lines(lines)
+    save_tree_to_file("assignment_2_huffman_tree_1.md", resulting_nodes)
 
     result.append("\n\n## Assignment-2-3\n\n")
 
