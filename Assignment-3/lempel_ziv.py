@@ -27,7 +27,7 @@ def print_tables(dictionary):
         dict_position = (
             bin(i + 1)[2:].zfill(len(bin(max_value)[2:])) if i < max_value else ""
         )
-        result.append(f"| {index:^10} | {dict_position} | {phrase:^10} |\n")
+        result.append(f"| {i+1:^10} | {dict_position} | {phrase:^10} |\n")
 
     return "".join(result)
 
@@ -108,4 +108,4 @@ if __name__ == "__main__":
     main()
 
 
-# Η κωδικη λεξη ειναι το περιεχομενο του κεξθκιυ 
+# Η κωδικη λεξη ειναι το περιεχομενο του κεξθκιυ
