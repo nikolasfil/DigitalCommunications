@@ -17,20 +17,17 @@ def H(list_of_probabilities):
     return h_info, h_value
 
 
-def main():
+def main(individual=False):
     letters_of_interest, letter_frequency, dict_of_interest = sharing_data(
-        ["L", "h", "l", "H", "s", "n", "w"], "poem.txt", True
+        ["L", "h", "l", "H", "s", "n", "w"], "poem.txt", individual
     )
     result = []
 
-    table_self_information_whole = print_table(letter_frequency, letter_frequency)
+    table_self_information_whole = print_table(
+        letter_frequency, letter_frequency, individual
+    )
     # print()
     result.append("\n".join(table_self_information_whole) + "\n\n")
-
-    # removing the symbol from the dictionary
-    letter_frequency = {
-        key: value for key, value in letter_frequency.items() if key != "symbol"
-    }
 
     h_info, h_value = H(
         [value / sum(letter_frequency.values()) for value in letter_frequency.values()]
@@ -46,4 +43,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main(True)

@@ -43,8 +43,8 @@ def print_ambiguous_table(dict):
     i_dict = {}
     # the table headers
     result = []
+    # f'| {"Combination":^{ln}} | {"P":^{ln}} | {"I":^{ln}} | {"Value":^{ln}} |\n'
 
-    # I(X)
     for key_d, value_d in doubles.items():
         temp = f'$$ I({key_d.replace("|", ";")}) = \log_' + "{2}"
 
@@ -56,11 +56,9 @@ def print_ambiguous_table(dict):
 
         result.append(temp)
 
-    # I(X;Y)
-
     temp = "$$\n\\begin{align}\nΙ(X;Y) = "
     for key_d, value_d in doubles.items():
-        temp += f"P({key_d}) * P({key_d.split('|')[1]}) * I({str(key_d).replace('|',';')}) + \\\ "
+        temp += f"P({key_d}) * P({key_d.split('|')[1]}) * I({key_d}) + \\\ "
     temp = temp[:-6] + f" = \\\ "
 
     for key_d, value_d in doubles.items():

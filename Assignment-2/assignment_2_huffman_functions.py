@@ -76,7 +76,7 @@ def huffman_encode_pairs(combinations_dict, pairs=2):
     huffman_pairs_encoded = {
         key: value for key, value in huffman_encoded.items() if len(key) == 2 * pairs
     }
-    result = f"\n\n| {'Combination':15} | {'Code':15} |\n"
+    result = f"\n\n| {'Combination':15} | {'Code':15} |\n| {'-':15} | {'-':15} |\n"
     for key in sorted(huffman_pairs_encoded.keys()):
         temp_result = f"| {key:15} | {huffman_pairs_encoded[key]:15} | "
         result += temp_result + "\n"

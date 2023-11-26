@@ -25,14 +25,14 @@ def change_to_letters(dictionary):
 
 
 def print_codes(codes):
-    result = f"| {'Symbol':^15} | {'Code':^15} |\n"
+    result = f"| {'Symbol':^15} | {'Code':^15} |\n | {'-':^15} | {'-':^15} |\n"
     for key, value in codes.items():
         result += f"| {key:^15} | {value:^15} |\n"
     return result
 
 
 def I_info(output):
-    result = f"| {'I':^14} | {'Log':^15} |\n"
+    result = f"| {'I':^14} | {'Log':^15} |\n |{'-':^14} | {'-':^15} |\n"
     i_dict = {}
     for key, value in output.items():
         # do -log2(value )
@@ -128,7 +128,7 @@ def get_combinations(output):
     for key in result_list:
         result_dict["".join(key)] = round(output[key[0]] * output[key[1]], 3)
 
-    result = f"\n\n| {'Combination':^15} | {'Probability':^15} |\n"
+    result = f"\n\n| {'Combination':^15} | {'Probability':^15} |\n| {'-':^15} | {'-':^15} |\n"
     for key, value in result_dict.items():
         result += f"| {key:^15} | {value:^15} |\n"
     return result, result_dict
@@ -143,10 +143,24 @@ def get_combinations_different(output1, output2):
     for key in result_list:
         result_dict["".join(key)] = round(output1[key[0]] * output2[key[1]], 3)
 
-    result = f"\n\n| {'Combination':^15} | {'Probability':^15} |\n"
+    result = f"\n\n| {'Combination':^15} | {'Probability':^15} |\n| {'-':^15} | {'-':^15} |\n"
     for key, value in result_dict.items():
         result += f"| {key:^15} | {value:^15} |\n"
     return result, result_dict
+
+
+def same_length_coding(codes):
+    # length = max([len(str(bin(key))) for key in codes.keys()])
+    length = len(str(bin(len(codes.keys()) - 1)))
+    return length
+
+
+def turn_into_same_length(codes):
+    length = same_length_coding(codes)
+    result = {}
+    for i, key in enumerate(codes.keys()):
+        result[key] = str(bin(i))[2:].zfill(length)
+    return result
 
 
 def main():
@@ -198,9 +212,32 @@ def main():
 
     lines = get_huffman_lines()
     resulting_nodes, noding = splitting_huffman_lines(lines)
+
+    # Assignment 2 2
+
+    result.append("\n\n## Assignment-2-2-2\n\n")
+
     save_tree_to_file("assignment_2_huffman_tree_1.md", resulting_nodes)
 
+    # Assignment 2 3
     result.append("\n\n## Assignment-2-3\n\n")
+
+    comb_same_length = turn_into_same_length(combinations_dict)
+
+    comb_same_length_info = print_codes(comb_same_length)
+    result.append(comb_same_length_info)
+
+    comb_sl_h_info, comb_sl_h_value = H_info(combinations_dict)
+    result.append(comb_sl_h_info)
+
+    comb_sl_r_info, comb_sl_r_value = R_info(comb_same_length, combinations_dict)
+    result.append(comb_sl_r_info)
+
+    comb_sl_n_info, comb_sl_n_value = n_info(comb_sl_r_value, comb_sl_h_value)
+    result.append(comb_sl_n_info)
+
+    # Assignment-3
+    result.append("\n\n## Assignment-3\n\n")
 
     combinations_3_pair_info, combinations_3_pair_dict = get_combinations_different(
         output, combinations_dict
