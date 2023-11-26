@@ -1,5 +1,5 @@
 ## Assignments
 
-[Assignment 1](./assignment1/Assignment_1_Report.pdf)
+[Assignment 1](./Assignment-1/Assignment_1_Report.pdf)
 
-[Assignment 2](./assignment2/Assignment_2_Report.pdf)
+[Assignment 2](./Assignment-2/Assignment_2_Report.pdf)
