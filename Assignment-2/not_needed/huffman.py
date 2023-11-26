@@ -38,7 +38,8 @@ def huffman(output):
 
 
 def print_I_info(output):
-    result = "| I | Log |\n"
+    result = "| I | Log |\n| --- | --- |\n
+    "
     for key, value in output.items():
         # do -log2(value )
         result += f"| I<sub>{key}</sub> | {-1*math.log2(value)} |\n"
