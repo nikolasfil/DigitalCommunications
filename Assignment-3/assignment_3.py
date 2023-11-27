@@ -22,14 +22,14 @@ def print_tables(input_string):
     print(encoded_dict)
 
     max_encoded_value = max(encoded_dict.values(), key=lambda x: x[0])[0]
+    max_encoded_value = len(str(bin(max_encoded_value))[2:])
+    max_value = max(dictionary.values())
 
     result = []
     result.append(
         f"| {'index':^10} | {'position':^10} | {'word':^10} | {'encoded':^10} |\n"
     )
     result.append(f"| {'-':^10} | {'-':^10} | {'-':^10} | {'-':^10} |\n")
-
-    max_value = max(dictionary.values())
 
     for i, (phrase, index) in enumerate(dictionary.items()):
         dict_position = (
