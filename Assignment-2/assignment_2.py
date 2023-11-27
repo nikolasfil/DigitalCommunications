@@ -25,7 +25,7 @@ def change_to_letters(dictionary):
 
 
 def print_codes(codes):
-    result = f"| {'Symbol':^15} | {'Code':^15} |\n | {'-':^15} | {'-':^15} |\n"
+    result = f"| {'Symbol':^15} | {'Code':^15} |\n| {'-':^15} | {'-':^15} |\n"
     for key, value in codes.items():
         result += f"| {key:^15} | {value:^15} |\n"
     return result
@@ -151,7 +151,7 @@ def get_combinations_different(output1, output2):
 
 def same_length_coding(codes):
     # length = max([len(str(bin(key))) for key in codes.keys()])
-    length = len(str(bin(len(codes.keys()) - 1)))
+    length = len(str(bin(len(codes.keys())))[2:])
     return length
 
 
@@ -270,7 +270,7 @@ def main():
     )
 
     print("\n\n".join(result))
-    save_to_file("code_result.md", result)
+    save_to_file("../MD_Reports/assignment-2-code-results.md", result)
 
 
 if __name__ == "__main__":
