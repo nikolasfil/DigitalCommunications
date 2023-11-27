@@ -69,11 +69,11 @@ def lempel_ziv_dict(input_string):
     counter = 0
 
     # checks the temp_string if it is empty and continues
-    while len(temp_string) > 0:
-        # iterates through all the possible words of length 1 to max_length
+    # while len(temp_string) > 0:
+    # iterates through all the possible words of length 1 to max_length
+    for _ in range(len(temp_string)):
         for length in range(1, max_length):
             temp_word = temp_string[:length]
-
             if temp_word not in dictionary.keys() and temp_word in binary_dict[length]:
                 dictionary[temp_word] = counter
 
@@ -81,12 +81,13 @@ def lempel_ziv_dict(input_string):
                 temp_string = temp_string[length:]
                 counter += 1
                 break
+
     return dictionary
 
 
 def main():
     input_string = "1111100010101010101000110000000001010101000000001001111000010101111110000001010101100"
-    input_string = "10101101001001110101000011001110101100011011"
+    # input_string = "10101101001001110101000011001110101100011011"
     result = []
     dictionary = lempel_ziv_dict(input_string)
 

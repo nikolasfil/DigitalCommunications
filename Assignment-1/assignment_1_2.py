@@ -7,7 +7,7 @@ def H(list_of_probabilities):
     import math
 
     h_value = -sum([p * math.log2(p) for p in list_of_probabilities])
-
+    h_value = round(h_value, 3)
     h_info = (
         "$$\nH(X) = -\sum_{i=1}^{" + f"{len(list_of_probabilities)}" + "}p_i\log_2(p_i)"
     )
@@ -39,7 +39,7 @@ def main(individual=False):
 
     # ------------------
 
-    save_to_file("assignment-1-2-code-result.md", result)
+    save_to_file("../MD_Reports/assignment-1-2-code-result.md", result)
 
 
 if __name__ == "__main__":

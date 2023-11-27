@@ -51,8 +51,10 @@ def print_ambiguous_table(dict):
         temp += "\left(\\frac" + "{" + f"P({key_d})" + "}{"
         temp += f'P({key_d.split("|")[0]})' + "}\\right) ="
         temp += f" \log_2\\left(\\frac{{{value_d}}}{{{singles[key_d.split('|')[0]]}}}\\right) = "
-        temp += f"{math.log2(value_d/singles[key_d.split('|')[0]])} $$"
-        i_dict[key_d] = math.log2(value_d / singles[key_d.split("|")[0]])
+        temp_value = math.log2(value_d / singles[key_d.split("|")[0]])
+        temp_value = round(temp_value, 3)
+        temp += f"{temp_value} $$"
+        i_dict[key_d] = temp_value
 
         result.append(temp)
 
@@ -75,6 +77,7 @@ def print_ambiguous_table(dict):
             for key_d, value_d in doubles.items()
         ]
     )
+    value = round(value, 3)
     temp += f"{value}"
     temp += "\n\end{align}\n$$"
 
@@ -103,12 +106,12 @@ def main(individual=False):
     possible_combinations = {
         "x=0": 0.35,
         "x=1": 0.65,
-        "y=0": 0.4775,
-        "y=1": 0.5225,
-        "y=0|x=0": 0.9,
-        "y=0|x=1": 0.1,
+        "y=0": 0.328,
+        "y=1": 0.672,
+        "y=0|x=0": 0.75,
         "y=1|x=0": 0.25,
-        "y=1|x=1": 0.75,
+        "y=0|x=1": 0.1,
+        "y=1|x=1": 0.9,
     }
 
     # possible_combinations = {
@@ -128,7 +131,7 @@ def main(individual=False):
 
     print("\n".join(result))
 
-    save_to_file("assignment-1-3-code-result.md", result)
+    save_to_file("../MD_Reports/assignment-1-3-code-result.md", result)
 
 
 if __name__ == "__main__":

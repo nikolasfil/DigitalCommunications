@@ -52,13 +52,13 @@ def print_table(dict_of_interest, letter_frequency, individual=False):
         )
 
     result.append(
-        f'| {"Number of Letters":^{ln}} | {N:^{ln}} | {"":^{ln}} | {"":^{ln}} | '
+        f'| {"Number of Letters":^{ln}} | {n_letters:^{ln}} | {"":^{ln}} | {"":^{ln}} | '
     )
     result.append(
         f'| {"Number of Symbols":^{ln}} | {n_symbols:^{ln}} | {"":^{ln}} | {"":^{ln}} | '
     )
     result.append(
-        f'| {"Number of Characters":^{ln}} | {n_letters:^{ln}} | {"":^{ln}} | {"":^{ln}} | '
+        f'| {"Number of Characters":^{ln}} | {N:^{ln}} | {"":^{ln}} | {"":^{ln}} | '
     )
 
     return result
@@ -92,7 +92,7 @@ def main(individual=False):
 
     print("\n".join(result))
 
-    save_to_file("assignment-1-1-code-result.md", result)
+    save_to_file("../MD_Reports/assignment-1-1-code-result.md", result)
 
 
 if __name__ == "__main__":
