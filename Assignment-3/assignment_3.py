@@ -19,10 +19,13 @@ def save_code():
 def print_tables(input_string):
     encoded_dict = lemziv_encoding(input_string)
     dictionary = lempel_ziv_dict(input_string)
-    print(encoded_dict)
 
+    # max_encoded_value is used for the filling of the first part of the encoded word
     max_encoded_value = max(encoded_dict.values(), key=lambda x: x[0])[0]
-    max_encoded_value = len(str(bin(max_encoded_value))[2:])
+    # max_encoded_value = len(bin(max_encoded_value))[2:]
+    max_encoded_value = length_binary(max_encoded_value)
+
+    # max_value is used for the filling of the dictionary position
     max_value = max(dictionary.values())
 
     result = []
@@ -32,13 +35,17 @@ def print_tables(input_string):
     result.append(f"| {'-':^10} | {'-':^10} | {'-':^10} | {'-':^10} |\n")
 
     for i, (phrase, index) in enumerate(dictionary.items()):
+        #
         dict_position = (
-            bin(i + 1)[2:].zfill(len(bin(max_value)[2:])) if i < max_value else " "
+            temp_turn_to_binary(i).zfill(length_binary(max_value))
+            if i < max_value
+            else " "
         )
 
-        temp_encoded_binary_position = str(bin(encoded_dict[phrase][0]))[2:].zfill(
+        temp_encoded_binary_position = bin(encoded_dict[phrase][0])[2:].zfill(
             max_encoded_value
         )
+
         temp_encoded = "".join(
             [
                 temp_encoded_binary_position,
@@ -67,7 +74,7 @@ def create_length_dictionary(max_length):
     binary_dict = defaultdict(list)
     for length in range(1, max_length):
         for i in range(2**length):
-            binary_dict[length].append(str(bin(i))[2:].zfill(length))
+            binary_dict[length].append(bin(i)[2:].zfill(length))
 
     return binary_dict
 
@@ -85,8 +92,13 @@ def create_grouped_dict(dictionary):
 
 
 def temp_turn_to_binary(temp_word):
-    temp_word = str(bin(int(temp_word)))[2:]
+    temp_word = bin(int(temp_word))[2:]
     return temp_word
+
+
+def length_binary(temp_word):
+    temp_word = bin(int(temp_word))[2:]
+    return len(temp_word)
 
 
 def get_key_from_value(dictionary, value):
@@ -97,7 +109,6 @@ def get_key_from_value(dictionary, value):
 
 def get_sorted_list(dictionary):
     sorted_list = []
-    values = list(dictionary.values()).sort()
     for value in dictionary.values():
         sorted_list.append(get_key_from_value(dictionary, value))
     return sorted_list
@@ -273,4 +284,5 @@ if __name__ == "__main__":
     main()
 
 
-# Η κωδικη λεξη ειναι το περιεχομενο του κεξθκιυ
+# Λοπον εχει προβλημα το dictionary που παιρνει μια εξτρα τιμη !!!
+#  και στα τελευταια νουμερα δεν κανει καλο το 1 στο δευτερο μερος του encoding
