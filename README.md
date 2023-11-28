@@ -6,6 +6,6 @@
 
 [Assignment 2](./Assignment-3/Assignment_3_Report.pdf)
 
-> [!attention]
+> [!WARNING]
 > Careful when running the codes, the save_to_file functions should point to the correct file.
 > As I have used it as a link with obsidian workspace, it will not work for you unless you have the same workspace.
