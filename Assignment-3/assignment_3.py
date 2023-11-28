@@ -17,6 +17,25 @@ def save_code():
 
 
 def print_tables(input_string):
+    cl = [
+        "00001",
+        "00000",
+        "00010",
+        "00011",
+        "00101",
+        "00100",
+        "00110",
+        "01001",
+        "01010",
+        "01110",
+        "01011",
+        "01101",
+        "01000",
+        "00111",
+        "10101",
+        "11101",
+    ]
+
     encoded_dict = lemziv_encoding(input_string)
     dictionary = lempel_ziv_dict(input_string)
 
@@ -31,7 +50,10 @@ def print_tables(input_string):
     result.append(
         f"| {'index':^10} | {'position':^10} | {'word':^10} | {'encoded':^10} |\n"
     )
+    result[-1] = result[-1][:-2] + f"| {'correct':^10} |\n"
+
     result.append(f"| {'-':^10} | {'-':^10} | {'-':^10} | {'-':^10} |\n")
+    result[-1] = result[-1][:-2] + f"| {'-':^10} |\n"
 
     for i, (phrase, index) in enumerate(dictionary.items()):
         dict_position = (
@@ -41,24 +63,16 @@ def print_tables(input_string):
             else " "
         )
 
-        # temp_encoded_binary_position = temp2bin(encoded_dict[phrase][0]).zfill(
-        #     max_encoded_value
-        # )
-
         temp_encoded_binary_position = temp2bin_filled(
             encoded_dict[phrase][0], max_encoded_value
         )
 
-        temp_encoded = "".join(
-            [
-                temp_encoded_binary_position,
-                str(encoded_dict[phrase][1]),
-            ]
-        )
+        temp_encoded = temp_encoded_binary_position + str(encoded_dict[phrase][1])
 
         result.append(
             f"| {i+1:^10} | {dict_position:^10} | {phrase:^10} | {temp_encoded:^10} |\n"
         )
+        result[-1] = result[-1][:-2] + f"| {cl[i]:^10} |\n"
 
     return "".join(result)
 
@@ -161,14 +175,12 @@ def lempel_ziv_dict(input_string):
 
 def length_word_checker(word, w, dictionary):
     """Checker for the same length words in the dictionary and returns the biggest one"""
-    temp_list = [0, 0]
+    temp_list = [0, 1]
     grouped_dict = create_grouped_dict(dictionary)
 
     temp_length = len(word)
 
     temp_sorted_length_list = [list(i.keys())[0] for i in grouped_dict[temp_length]]
-
-    temp_sorted_length_list = sorted(temp_sorted_length_list, key=lambda x: int(x, 2))
 
     for same_length_word in temp_sorted_length_list:
         # means that both words start the same
@@ -176,7 +188,7 @@ def length_word_checker(word, w, dictionary):
             #     # if the same_length_word is bigger than the word we are checking then we found the small word, that means 1
             if same_length_word > word:
                 temp_list[1] = 0
-            elif same_length_word < word:
+            elif same_length_word <= word:
                 temp_list[1] = 1
 
     return temp_list[1]
@@ -222,9 +234,6 @@ def main():
     result.append(print_tables(input_string))
     result.append("\n\n")
 
-    # Encoding
-    # result.append("## Encoding\n\n")
-
     print("".join(result))
 
     # Saving Code
@@ -238,7 +247,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-# Λοπον εχει προβλημα το dictionary που παιρνει μια εξτρα τιμη !!!
-#  και στα τελευταια νουμερα δεν κανει καλο το 1 στο δευτερο μερος του encoding
