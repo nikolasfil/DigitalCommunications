@@ -17,27 +17,8 @@ def save_code():
 
 
 def print_tables(input_string):
-    cl = [
-        "00001",
-        "00000",
-        "00010",
-        "00011",
-        "00101",
-        "00100",
-        "00110",
-        "01001",
-        "01010",
-        "01110",
-        "01011",
-        "01101",
-        "01000",
-        "00111",
-        "10101",
-        "11101",
-    ]
-
-    encoded_dict = lemziv_encoding(input_string)
-    dictionary = lempel_ziv_dict(input_string)
+    dictionary, encoded_dict = lemziv_encoding(input_string)
+    # dictionary = lempel_ziv_dict(input_string)
 
     # max_encoded_value is used for the filling of the first part of the encoded word
     max_encoded_value = max(encoded_dict.values(), key=lambda x: x[0])[0]
@@ -50,10 +31,8 @@ def print_tables(input_string):
     result.append(
         f"| {'index':^10} | {'position':^10} | {'word':^10} | {'encoded':^10} |\n"
     )
-    result[-1] = result[-1][:-2] + f"| {'correct':^10} |\n"
 
     result.append(f"| {'-':^10} | {'-':^10} | {'-':^10} | {'-':^10} |\n")
-    result[-1] = result[-1][:-2] + f"| {'-':^10} |\n"
 
     for i, (phrase, index) in enumerate(dictionary.items()):
         dict_position = (
@@ -71,7 +50,6 @@ def print_tables(input_string):
         result.append(
             f"| {i+1:^10} | {dict_position:^10} | {phrase:^10} | {temp_encoded:^10} |\n"
         )
-        result[-1] = result[-1][:-2] + f"| {cl[i]:^10} |\n"
 
     return "".join(result)
 
@@ -168,7 +146,8 @@ def lempel_ziv_dict(input_string):
                 temp_string = temp_string[length:]
                 counter += 1
                 break
-
+    if temp_string:
+        print(f"{temp_string} : {counter}")
     return dictionary
 
 
@@ -208,7 +187,7 @@ def lemziv_encoding(input_string):
         temp_list = [0, 0]
         temp_list[1] = length_word_checker(word, dictionary)
 
-        for i, w_iter in enumerate(sorted(iterated)):
+        for w_iter in sorted(iterated):
             temp_list[1] = length_word_checker(word, dictionary)
 
             if word.startswith(w_iter):
@@ -221,16 +200,14 @@ def lemziv_encoding(input_string):
         encoded_dict[word] = temp_list
         iterated.append(word)
 
-    return encoded_dict
+    return dictionary, encoded_dict
 
 
 def main():
-    # input_string = "1111100010101010101000110000000001010101000000001001111000010101111110000001010101100"
-    input_string = "10101101001001110101000011001110101100011011"
+    input_string = "1111100010101010101000110000000001010101000000001001111000010101111110000001010101100"
+    # input_string = "10101101001001110101000011001110101100011011"
     result = []
-    #
 
-    # print(dictionary)
     result.append("## Lempel-Ziv Dictionary\n\n")
     result.append(print_tables(input_string))
     result.append("\n\n")
@@ -240,7 +217,7 @@ def main():
     # Saving Code
 
     result.append("## Code\n\n")
-    # result.append("".join(save_code()))
+    result.append("".join(save_code()))
     result.append("\n\n")
 
     save_to_file(result, "../MD_Reports/assignment-3-code-results.md")
