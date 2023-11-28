@@ -57,9 +57,8 @@ def print_tables(input_string):
 
     for i, (phrase, index) in enumerate(dictionary.items()):
         dict_position = (
-            # temp2bin(index).zfill(length_binary(max_value) - 1)
             temp2bin_filled(index, length_binary(max_value) - 1)
-            if i < max_value
+            if i < max_value - 1
             else " "
         )
 
@@ -173,25 +172,27 @@ def lempel_ziv_dict(input_string):
     return dictionary
 
 
-def length_word_checker(word, w, dictionary):
+def length_word_checker(word, dictionary):
     """Checker for the same length words in the dictionary and returns the biggest one"""
-    temp_list = [0, 1]
+    last_digit = 1
     grouped_dict = create_grouped_dict(dictionary)
 
-    temp_length = len(word)
+    t_list = grouped_dict[len(word)]
+    t_sorted_list = []
+    for i in t_list:
+        item = list(i.keys())[0]
+        if item != word:
+            t_sorted_list.append(item)
 
-    temp_sorted_length_list = [list(i.keys())[0] for i in grouped_dict[temp_length]]
+    for s_word in t_sorted_list:
+        # We only want the words that start off the same
+        if s_word[:-1] == word[:-1]:
+            if s_word > word:
+                last_digit = 0
+            elif s_word < word:
+                last_digit = 1
 
-    for same_length_word in temp_sorted_length_list:
-        # means that both words start the same
-        if same_length_word.startswith(w):
-            #     # if the same_length_word is bigger than the word we are checking then we found the small word, that means 1
-            if same_length_word > word:
-                temp_list[1] = 0
-            elif same_length_word <= word:
-                temp_list[1] = 1
-
-    return temp_list[1]
+    return last_digit
 
 
 def lemziv_encoding(input_string):
@@ -204,19 +205,19 @@ def lemziv_encoding(input_string):
     sorterd_list = get_sorted_list(dictionary)
     iterated = []
     for word in sorterd_list:
-        temp_list = [0, 1]
-        for i, w in enumerate(sorted(iterated)):
-            temp_list[1] = length_word_checker(word, w, dictionary)
-            if word.startswith(w):
+        temp_list = [0, 0]
+        temp_list[1] = length_word_checker(word, dictionary)
+
+        for i, w_iter in enumerate(sorted(iterated)):
+            temp_list[1] = length_word_checker(word, dictionary)
+
+            if word.startswith(w_iter):
                 # get the last biggest word that was inserted and that starts with w
-                temp_list[0] = dictionary[w]
+                temp_list[0] = dictionary[w_iter]
 
                 # start checking for the same words in the grouped_dict
-                temp_list[1] = length_word_checker(word, w, dictionary)
+                temp_list[1] = length_word_checker(word, dictionary)
 
-        # else:
-        #     print(f"{word} {temp_list} {iterated}")
-        # print(f"{word} {temp_list}")
         encoded_dict[word] = temp_list
         iterated.append(word)
 
