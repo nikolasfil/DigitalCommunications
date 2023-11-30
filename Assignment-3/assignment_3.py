@@ -18,7 +18,6 @@ def save_code():
 
 def print_tables(input_string):
     dictionary, encoded_dict = lemziv_encoding(input_string)
-    # dictionary = lempel_ziv_dict(input_string)
 
     # max_encoded_value is used for the filling of the first part of the encoded word
     max_encoded_value = max(encoded_dict.values(), key=lambda x: x[0])[0]
@@ -41,11 +40,7 @@ def print_tables(input_string):
             else " "
         )
 
-        temp_encoded_binary_position = temp2bin_filled(
-            encoded_dict[phrase][0], max_encoded_value
-        )
-
-        temp_encoded = temp_encoded_binary_position + str(encoded_dict[phrase][1])
+        temp_encoded = encoded_dict[phrase]
 
         result.append(
             f"| {i+1:^10} | {dict_position:^10} | {phrase:^10} | {temp_encoded:^10} |\n"
@@ -73,24 +68,6 @@ def create_length_dictionary(max_length):
     return binary_dict
 
 
-def create_grouped_dict(dictionary):
-    """Returns a dictionary with keys the length of the values and values a sorted list of dictionaries"""
-
-    grouped_dict = defaultdict(list)
-    for value, index in dictionary.items():
-        temp_d = {value: index}
-        temp_key = len(str(value))
-        grouped_dict[temp_key].append(temp_d)
-        grouped_dict[temp_key].sort(key=lambda x: list(x.keys())[0])
-    return grouped_dict
-
-
-def temp2bin(temp_word):
-    """turns a number to binary and returns it as a string"""
-    temp_word = bin(int(temp_word))[2:]
-    return temp_word
-
-
 def length_binary(temp_word):
     """turns a number to binary and returns the length of the binary representation"""
     temp_word = bin(int(temp_word))[2:]
@@ -101,22 +78,6 @@ def temp2bin_filled(temp_word, max_length):
     """turns a number to binary and returns it as a string filled with zeros"""
     temp_word = bin(int(temp_word))[2:].zfill(max_length)
     return temp_word
-
-
-def get_key_from_value(dictionary, value):
-    """Returns the key of a dictionary from a value"""
-    for key, val in dictionary.items():
-        if val == value:
-            return key
-
-
-def get_sorted_list(dictionary):
-    """Returns a sorted list of the values of a dictionary"""
-    sorted_list = []
-    sorted_values = sorted(dictionary.values())
-    for value in sorted_values:
-        sorted_list.append(get_key_from_value(dictionary, value))
-    return sorted_list
 
 
 def lempel_ziv_dict(input_string):
@@ -151,55 +112,23 @@ def lempel_ziv_dict(input_string):
     return dictionary
 
 
-def length_word_checker(word, dictionary):
-    """Checker for the same length words in the dictionary and returns the biggest one"""
-    last_digit = 1
-    grouped_dict = create_grouped_dict(dictionary)
-
-    t_list = grouped_dict[len(word)]
-    t_sorted_list = []
-    for i in t_list:
-        item = list(i.keys())[0]
-        if item != word:
-            t_sorted_list.append(item)
-
-    for s_word in t_sorted_list:
-        # We only want the words that start off the same
-        if s_word[:-1] == word[:-1]:
-            if s_word > word:
-                last_digit = 0
-            elif s_word < word:
-                last_digit = 1
-
-    return last_digit
-
-
 def lemziv_encoding(input_string):
     dictionary = lempel_ziv_dict(input_string)
 
-    # encoded will be a dictionary containing as key the word to be encoded
-    # and as value a list of the position of the highest closest word, and one bit
-    encoded_dict = defaultdict(list)
+    max_value = max(dictionary.values())
 
-    sorterd_list = get_sorted_list(dictionary)
-    iterated = []
-    for word in sorterd_list:
-        temp_list = [0, 0]
-        temp_list[1] = length_word_checker(word, dictionary)
+    max_value = length_binary(max_value)
 
-        for w_iter in sorted(iterated):
-            temp_list[1] = length_word_checker(word, dictionary)
+    encoded_dict = defaultdict(str)
 
-            if word.startswith(w_iter):
-                # get the last biggest word that was inserted and that starts with w
-                temp_list[0] = dictionary[w_iter]
-
-                # start checking for the same words in the grouped_dict
-                temp_list[1] = length_word_checker(word, dictionary)
-
-        encoded_dict[word] = temp_list
-        iterated.append(word)
-
+    for word in dictionary.keys():
+        # check if the word is 0 or 1
+        if word == "0" or word == "1":
+            encoded_dict[word] = temp2bin_filled(0, max_value) + word
+            continue
+        temp_pos = temp2bin_filled(dictionary[word[:-1]], max_value)
+        temp_bit = word[-1]
+        encoded_dict[word] = temp_pos + temp_bit
     return dictionary, encoded_dict
 
 
