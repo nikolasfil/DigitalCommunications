@@ -19,12 +19,8 @@ def save_code():
 def print_tables(input_string):
     dictionary, encoded_dict = lemziv_encoding(input_string)
 
-    # max_encoded_value is used for the filling of the first part of the encoded word
-    max_encoded_value = max(encoded_dict.values(), key=lambda x: x[0])[0]
-    max_encoded_value = length_binary(max_encoded_value)
-
     # max_value is used for the filling of the dictionary position
-    max_value = max(dictionary.values())
+    max_value = len(dictionary.values())
 
     result = []
     result.append(
@@ -34,16 +30,10 @@ def print_tables(input_string):
     result.append(f"| {'-':^10} | {'-':^10} | {'-':^10} | {'-':^10} |\n")
 
     for i, (phrase, index) in enumerate(dictionary.items()):
-        dict_position = (
-            temp2bin_filled(index, length_binary(max_value) - 1)
-            if i < max_value - 1
-            else " "
-        )
-
         temp_encoded = encoded_dict[phrase]
 
         result.append(
-            f"| {i+1:^10} | {dict_position:^10} | {phrase:^10} | {temp_encoded:^10} |\n"
+            f"| {i+1:^10} | {index:^10} | {phrase:^10} | {temp_encoded:^10} |\n"
         )
 
     return "".join(result)
@@ -107,26 +97,31 @@ def lempel_ziv_dict(input_string):
                 temp_string = temp_string[length:]
                 counter += 1
                 break
+
+    dictionary = {
+        k: temp2bin_filled(v, length_binary(counter)) for k, v in dictionary.items()
+    }
+
     if temp_string:
         print(f"{temp_string} : {counter}")
+
     return dictionary
 
 
 def lemziv_encoding(input_string):
     dictionary = lempel_ziv_dict(input_string)
 
-    max_value = max(dictionary.values())
-
-    max_value = length_binary(max_value)
+    max_value = len(max(dictionary.values()))
 
     encoded_dict = defaultdict(str)
 
     for word in dictionary.keys():
         # check if the word is 0 or 1
         if word == "0" or word == "1":
+            # encoded_dict[word] = temp2bin_filled(0, max_value) + word
             encoded_dict[word] = temp2bin_filled(0, max_value) + word
             continue
-        temp_pos = temp2bin_filled(dictionary[word[:-1]], max_value)
+        temp_pos = dictionary[word[:-1]]
         temp_bit = word[-1]
         encoded_dict[word] = temp_pos + temp_bit
     return dictionary, encoded_dict
