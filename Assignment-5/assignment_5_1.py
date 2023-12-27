@@ -40,6 +40,9 @@ def main(individual=False):
 
     file = Path(Path(__file__).parent, "words.txt")
 
+    with open(file, "r") as f:
+        data = f.read().strip("\n")
+
     letters_of_interest, letter_frequency, dict_of_interest = sharing_data(
         list("αβγδ"), file, individual
     )
@@ -67,8 +70,6 @@ def main(individual=False):
 
     #  --------------- B --------------------------
 
-    # combinations_info, combinations_dict = get_combinations(output)
-
     # Assignment 2 3
     result.append("\n\n## Assignment-5-1-a\n\n")
 
@@ -80,6 +81,15 @@ def main(individual=False):
 
     comb_same_length_info = print_codes(comb_same_length)
     result.append(comb_same_length_info)
+
+    # Data encoding with code of the same length :
+
+    # print(comb_same_length)
+
+    comb_data_encoding = "".join([comb_same_length[key] for key in data])
+    result.append(
+        f"\n\nData encoding with code of the same length : \n\n {data} -> \n\n\{comb_data_encoding}\n\n"
+    )
 
     # comb_sl_h_info, comb_sl_h_value = H_info(combinations_dict)
     # result.append(comb_sl_h_info)

@@ -4,14 +4,15 @@ from collections import defaultdict
 import math
 
 
-def getting_info_from_file(file, individual=False):
+def getting_info_from_file(namefile, individual=False):
     """This function will return a dictionary with the frequency of each letter in the file"""
     letter_frequency = defaultdict(int)
-    with open("poem.txt", "r") as file:
+    with open(namefile, "r") as file:
         for line in file:
             for letter in line:
                 letter_frequency[letter] += 1
-    letter_frequency["newLine"] = letter_frequency.pop("\n")
+    if "\n" in letter_frequency.keys():
+        letter_frequency["newLine"] = letter_frequency.pop("\n")
     return letter_frequency
 
 
@@ -44,8 +45,12 @@ def print_table(dict_of_interest, letter_frequency, individual=False):
     ]
 
     for key, value in dict_of_interest.items():
-        information = f"{(-1*math.log2(value/N))}"
-        probability = f"{value/N}"
+        information = -1 * math.log2(value / N)
+        information = round(information, 3)
+        information = f"{information}"
+        probability = value / N
+        probability = round(probability, 3)
+        probability = f"{probability}"
 
         result.append(
             f"| {key:^{ln}} | {value:^{ln}} | {probability:^{ln}} | {information:^{ln}} |"
