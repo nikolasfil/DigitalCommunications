@@ -133,13 +133,13 @@ class Assignment5:
         # --------------- Results  --------------------
         print("\n".join(self.result))
 
-        save_to_file(
-            "../MD_Reports/assignment-5/assignment-5-1-code-result.md", self.result
-        )
+        immediate_parent = Path(__file__).parent
+        root_folder = Path(immediate_parent.parent)
+
+        file_to_save = Path(root_folder, "MD_Reports", "assignment-5-1-code-result.md")
+
+        save_to_file(file_to_save, self.result)
 
 
 if __name__ == "__main__":
-    # main()
     assignment = Assignment5()
-
-    # print(method_list)
