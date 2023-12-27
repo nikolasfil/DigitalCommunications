@@ -22,13 +22,19 @@ class Assignment5:
 
         with open(self.file, "r") as f:
             self.data = f.read().strip("\n")
+
+        # Getting the functions to run :
+        self.method_list = [
+            func for func in dir(Assignment5) if callable(getattr(Assignment5, func))
+        ]
+
         self.main()
 
     def main(self):
         self.initializations()
-        self.main_1()
-        self.main_2()
-        self.main_3()
+        for method in self.method_list:
+            if method.startswith("main_"):
+                getattr(self, method)()
         self.resulting()
 
     def initializations(self):
@@ -132,100 +138,8 @@ class Assignment5:
         )
 
 
-def H(list_of_probabilities):
-    """This function will return the entropy of a given probability"""
-    import math
-
-    h_value = -sum([p * math.log2(p) for p in list_of_probabilities])
-    h_value = round(h_value, 3)
-    h_info = (
-        "$$\nH(X) = -\sum_{i=1}^{" + f"{len(list_of_probabilities)}" + "}p_i\log_2(p_i)"
-    )
-    h_info += "\n$$\n\n$$\nH(X) = -"
-    for i, p in enumerate(list_of_probabilities):
-        p = round(p, 3)
-        h_info += f" {p}*log_2({p})"
-        if i != len(list_of_probabilities) - 1:
-            h_info += " - "
-        else:
-            h_info += f" = {h_value}\n$$\n\nH(x) = {h_value}\n\n"
-    # h_info += f" = {h_value}\n$$\n\nH(x) = {h_value}\n\n"
-
-    return h_info, h_value
-
-
-def main(individual=False):
-    # def main_1(individual=False):
-    #  --------------- A --------------------------
-    result = []
-
-    file = Path(Path(__file__).parent, "words.txt")
-
-    with open(file, "r") as f:
-        data = f.read().strip("\n")
-
-    letters_of_interest, letter_frequency, dict_of_interest = sharing_data(
-        list("αβγδ"), file, individual
-    )
-
-    # printing the table
-    table = print_table(dict_of_interest, letter_frequency, individual)
-
-    table = "\n".join(table)
-
-    result.append(table)
-
-    n_letter = sum(letter_frequency.values())
-
-    output = {key: (value / n_letter) for key, value in letter_frequency.items()}
-
-    h_info, h_value = H(list(output.values()))
-
-    output = {
-        key: round(value / n_letter, 3) for key, value in letter_frequency.items()
-    }
-
-    result.append(h_info)
-
-    result.append("\n\n---\n\n")
-
-    #  --------------- B --------------------------
-
-    # Assignment 2 3
-    result.append("\n\n## Assignment-5-1-a\n\n")
-
-    combinations_dict = output
-
-    comb_same_length = turn_into_same_length(combinations_dict)
-    comb_same_length = {key: value[1:] for key, value in comb_same_length.items()}
-    # print(comb_same_length)
-
-    comb_same_length_info = print_codes(comb_same_length)
-    result.append(comb_same_length_info)
-
-    # Data encoding with code of the same length :
-
-    comb_data_encoding = "".join([comb_same_length[key] for key in data])
-    result.append(
-        f"\n\nData encoding with code of the same length : \n\n {data} -> \n\n\{comb_data_encoding}\n\n"
-    )
-
-    result.append("\n\n---\n\n")
-
-    #  --------------- C --------------------------
-
-    combinations_info, combinations = get_combinations(letter_frequency)
-    # result.append(combinations_info)
-
-    # comb_same_length_info = print_codes(comb_same_length)
-    # result.append(comb_same_length_info)
-
-    # --------------- Results  --------------------
-    print("\n".join(result))
-
-    save_to_file("../MD_Reports/assignment-5/assignment-5-1-code-result.md", result)
-
-
 if __name__ == "__main__":
     # main()
     assignment = Assignment5()
+
+    # print(method_list)
