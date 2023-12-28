@@ -5,7 +5,7 @@ import math
 
 
 class Assignment1:
-    def __init__(self, file=None, individual=False) -> None:
+    def __init__(self, individual=False) -> None:
         self.result = []
         self.individual = individual
         self.method_list = [func for func in dir(self) if callable(getattr(self, func))]
