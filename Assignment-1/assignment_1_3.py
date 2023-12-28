@@ -131,7 +131,7 @@ def main(individual=False):
 
     print("\n".join(result))
 
-    save_to_file("../MD_Reports/assignment-1-3-code-result.md", result)
+    save_to_file("../MD_Reports/assignment-1/assignment-1-3-code-result.md", result)
 
 
 if __name__ == "__main__":
