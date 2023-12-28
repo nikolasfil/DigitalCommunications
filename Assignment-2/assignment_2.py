@@ -3,6 +3,9 @@ from assignment_2_huffman_functions import *
 from efficiency_plotter import *
 from huffman_brancher import *
 
+# class Assignment2:
+# change the whole file into
+
 
 def save_to_file(file_name, result):
     with open(file_name, "w") as file:
@@ -270,7 +273,13 @@ def main():
     )
 
     print("\n\n".join(result))
-    save_to_file("../MD_Reports/assignment-2-code-results.md", result)
+    from pathlib import Path
+
+    parent_folder = Path(__file__).parent
+    root_folder = Path(parent_folder, "../MD_Reports")
+    file = Path(root_folder, "assignment-2", "assignment-2-code-results.md")
+    # save_to_file("../MD_Reports/assignment-2-code-results.md", result)
+    save_to_file(file, result)
 
 
 if __name__ == "__main__":

@@ -29,6 +29,29 @@ def splitting_huffman_lines(lines):
     return resulting_nodes, noding
 
 
+def save_tree_to_file(file, noding):
+    with open(file, "w") as f:
+        f.write("```mermaid\ngraph LR; \n")
+        for node in noding:
+            f.write(node)
+        f.write("\n```\n")
+
+
+def main():
+    lines = get_huffman_lines()
+
+    # for line in lines:
+    #     print(line)
+    resulting_nodes, noding = splitting_huffman_lines(lines)
+    # for i in noding:
+    #     print(i)
+    save_tree_to_file("assignment_2_huffman_tree_1.md", resulting_nodes)
+
+
+if __name__ == "__main__":
+    main()
+
+
 # def splitting_huffman_lines1(lines):
 #     resulting_nodes = []
 #     noding = []
@@ -65,26 +88,3 @@ def splitting_huffman_lines(lines):
 #     # print(mutliple_nodes_breakdown)
 
 #     return resulting_nodes,noding
-
-
-def save_tree_to_file(file, noding):
-    with open(file, "w") as f:
-        f.write("```mermaid\ngraph LR; \n")
-        for node in noding:
-            f.write(node)
-        f.write("\n```\n")
-
-
-def main():
-    lines = get_huffman_lines()
-
-    # for line in lines:
-    #     print(line)
-    resulting_nodes, noding = splitting_huffman_lines(lines)
-    # for i in noding:
-    #     print(i)
-    save_tree_to_file("assignment_2_huffman_tree_1.md", resulting_nodes)
-
-
-if __name__ == "__main__":
-    main()
