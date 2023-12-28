@@ -6,7 +6,8 @@ from assignment_2 import (
     turn_into_same_length,
     get_combinations,
 )
-from assignment_1_1 import print_table, sharing_data, save_to_file
+
+from assignment_1_class import Assignment1
 
 # from assignment_1_2 import H
 
@@ -24,11 +25,10 @@ class Assignment5:
             self.data = f.read().strip("\n")
 
         # Getting the functions to run :
-        self.method_list = [
-            func for func in dir(Assignment5) if callable(getattr(Assignment5, func))
-        ]
+        self.method_list = [func for func in dir(self) if callable(getattr(self, func))]
 
-        self.main()
+        self.assignment_1 = Assignment1(individual=self.individual)
+        # self.main()
 
     def main(self):
         self.initializations()
@@ -42,10 +42,14 @@ class Assignment5:
             self.letters_of_interest,
             self.letter_frequency,
             self.dict_of_interest,
-        ) = sharing_data(list("αβγδ"), self.file, self.individual)
+            # ) = sharing_data(list("αβγδ"), self.file, self.individual)
+        ) = self.assignment_1.sharing_data(list("αβγδ"), self.file, self.individual)
 
     def H(sekf, list_of_probabilities):
         """This function will return the entropy of a given probability"""
+
+        # This is an overwrite of an imported function
+
         import math
 
         h_value = -sum([p * math.log2(p) for p in list_of_probabilities])
@@ -69,7 +73,8 @@ class Assignment5:
 
     def main_1(self):
         # printing the table that contains the possibility of occurence and the αυτοπληροφορια
-        table = print_table(
+        # table = print_table(
+        table = self.assignment_1.print_table(
             self.dict_of_interest, self.letter_frequency, self.individual
         )
 
@@ -124,6 +129,7 @@ class Assignment5:
         self.combinations_info, self.combinations = get_combinations(
             self.letter_frequency
         )
+
         # result.append(combinations_info)
 
         # comb_same_length_info = print_codes(comb_same_length)
@@ -136,10 +142,13 @@ class Assignment5:
         immediate_parent = Path(__file__).parent
         root_folder = Path(immediate_parent.parent)
 
-        file_to_save = Path(root_folder, "MD_Reports", "assignment-5-1-code-result.md")
+        file_to_save = Path(
+            root_folder, "MD_Reports", "assignment-5", "assignment-5-1-code-result.md"
+        )
 
-        save_to_file(file_to_save, self.result)
+        self.assignment_1.save_to_file(file_to_save, self.result)
 
 
 if __name__ == "__main__":
     assignment = Assignment5()
+    assignment.main()
