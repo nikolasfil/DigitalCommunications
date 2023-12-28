@@ -63,7 +63,11 @@ class HuffmanFunctions:
             # add the combined node to the list of nodes
 
             nodes.append([combined_node, node1[1] + node2[1]])
+
+            print(f"Node Tree: {len(nodes)} {nodes}")
+
             # add the combined node to the dictionary of codes
+
             for symbol in node1[0]:
                 codes[symbol] = "0" + codes[symbol]
             for symbol in node2[0]:
