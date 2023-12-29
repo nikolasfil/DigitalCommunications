@@ -1,5 +1,5 @@
 from pathlib import Path
-from ..Assignment_1.assignment_1_class import *
+from assignment_1_class import Assignment1
 
 import math
 from assignment_2_huffman_functions_class import HuffmanFunctions, HuffmanBrancher
