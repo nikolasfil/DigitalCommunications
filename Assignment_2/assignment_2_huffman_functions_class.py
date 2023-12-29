@@ -121,15 +121,20 @@ class HuffmanFunctions:
 
 
 class HuffmanBrancher:
-    def __init__(self, file, file_to_save) -> None:
-        self.file = file
-        self.file_to_save = file_to_save
+    def __init__(self, input_text, output_file) -> None:
+        self.input_text = input_text
+        self.output_file = output_file
 
         parent_folder = Path(__file__).parent
-        self.file = Path(parent_folder, file)
+        self.input_text = Path(parent_folder, input_text)
+
+        root_folder = Path(parent_folder.parent)
+        self.output_file = Path(
+            root_folder, "MD_Reports", "assignment-2", self.output_file
+        )
 
     def get_huffman_lines(self):
-        with open(self.file) as f:
+        with open(self.input_text) as f:
             lines = f.readlines()
         return lines
 
@@ -159,6 +164,7 @@ class HuffmanBrancher:
 
     def save_tree_to_file(self, file, noding):
         with open(file, "w") as f:
+            f.write("---\nnum: 2\n---\n\n")
             f.write("```mermaid\ngraph LR; \n")
             for node in noding:
                 f.write(node)
@@ -169,14 +175,12 @@ class HuffmanBrancher:
 
         resulting_nodes, noding = self.splitting_huffman_lines(lines)
 
-        parent_folder = Path(__file__).parent
-        root_folder = Path(parent_folder.parent)
+        # file_to_save = Path(root_folder, "MD_Reports", "assignment-2", self.output_file)
+        # print(f"file: {file_to_save}")
 
-        file_to_save = Path(
-            root_folder, "MD_Reports", "assignment-2", self.file_to_save
-        )
+        # self.save_tree_to_file(file_to_save, resulting_nodes)
 
-        self.save_tree_to_file(file_to_save, resulting_nodes)
+        self.save_tree_to_file(self.output_file, resulting_nodes)
 
 
 if __name__ == "__main__":

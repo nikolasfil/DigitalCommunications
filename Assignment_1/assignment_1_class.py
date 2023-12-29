@@ -115,7 +115,7 @@ class Assignment1:
 
     def save_to_file(self, file_name, result):
         with open(file_name, "w") as file:
-            file.write("\n\n")
+            # file.write("\n\n")
             file.write("\n".join(result))
 
     def H(self, list_of_probabilities):

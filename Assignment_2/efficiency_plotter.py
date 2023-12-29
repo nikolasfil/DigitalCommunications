@@ -1,8 +1,11 @@
 import matplotlib.pyplot as plt
+from pathlib import Path
 
 
 def plotter(values):
     # Create a bar plot
+    file_dir = Path(__file__).parent
+
     plt.plot(
         range(1, len(values) + 1),
         values,
@@ -21,7 +24,8 @@ def plotter(values):
     # plt.show()
 
     # save the plot
-    plt.savefig("plot.png", dpi=300, bbox_inches="tight")
+    file = Path(file_dir, "plot.png")
+    plt.savefig(file, dpi=300, bbox_inches="tight")
 
     return "\n\n![700](plot.png)\n\n"
 
