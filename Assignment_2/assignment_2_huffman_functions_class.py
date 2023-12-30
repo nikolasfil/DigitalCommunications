@@ -135,6 +135,38 @@ class HuffmanFunctions:
 
         return mapping
 
+    def huffman_encoding(self, symbol_prob):
+        root = self.build_huffman_tree(symbol_prob)
+        codes = self.build_huffman_codes(root)
+
+        return codes
+
+    def replacing_keys(self, original, edited):
+        """Replaces the keys of the edited dictionary with the original ones"""
+        reverse_original = self.reverse_dictionary(original)
+        reverse_edited = self.reverse_dictionary(edited)
+
+        result = {}
+
+        for key_value in reverse_edited:
+            #
+            original_key = reverse_original[key_value]
+            edited_key = reverse_edited[key_value]
+
+            original_value = original[original_key]
+            edited_value = edited[edited_key]
+
+            result[original_key] = edited_value
+
+        return result
+
+    def reverse_dictionary(self, dictionary):
+        """Reverses a dictionary"""
+        result = {}
+        for key in dictionary:
+            result[dictionary[key]] = key
+        return result
+
 
 class HuffmanBrancher:
     def __init__(self, input_text, output_file) -> None:

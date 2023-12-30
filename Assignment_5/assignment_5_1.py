@@ -24,7 +24,7 @@ class Assignment5:
         self.method_list = [func for func in dir(self) if callable(getattr(self, func))]
 
         self.assignment_1 = Assignment1(individual=self.individual)
-        self.assignment_2 = Assignment2(individual=self.individual, display=False)
+        self.assignment_2 = Assignment2(individual=self.individual, display=True)
         # self.main()
 
     def mdreporting(self, assignment, file_name):
@@ -156,6 +156,7 @@ class Assignment5:
         self.result.append(combinations_info)
 
         # Bad previous coding forces me to do this
+        self.origianl_output = self.output
         self.output = self.assignment_2.change_to_numbering(self.output)
 
         # so this one will be in a1 instead of single lettering but it should be  fun to rerun it and just save again the table from the probabilities and just copy paste it
@@ -181,7 +182,20 @@ class Assignment5:
         # self.bracker = self.assignment_2.HuffmanBrancher(
         #      self.assignment_2.file_tree,
         # )
-        print(self.assignment_2.brancher.file_tree)
+        # print(self.assignment_2.brancher.input_text)
+
+        self.output = self.assignment_2.huffman_functions.replacing_keys(
+            self.origianl_output, self.output
+        )
+
+        print(self.output)
+
+        huffman_codes = self.assignment_2.huffman_functions.huffman_encoding(
+            self.output
+        )
+
+        print(huffman_codes)
+        # self.result.append("\n\n## Assignment-5-4\n\n")
 
     def resulting(self):
         # --------------- Results  --------------------
