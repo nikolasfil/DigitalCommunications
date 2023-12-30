@@ -14,8 +14,22 @@ class HuffmanNode:
 
 
 class HuffmanFunctions:
-    def __init__(self) -> None:
-        pass
+    def __init__(self, display=None, file=None) -> None:
+        if display:
+            self.display = display
+        else:
+            self.display = False
+
+        if file:
+            self.file_tree = file
+        else:
+            self.file_tree = "huffman_tree.txt"
+        self.file_tree = self.samefolder(self.file_tree)
+
+    def samefolder(self, file_name):
+        parent_folder = Path(__file__).parent
+        file = Path(parent_folder, file_name)
+        return file
 
     def build_huffman_tree(self, symbol_freq):
         heap = [HuffmanNode(symbol, freq) for symbol, freq in symbol_freq.items()]
@@ -33,7 +47,8 @@ class HuffmanFunctions:
 
             heapq.heappush(heap, merged_node)
 
-            self.print_huffman_tree(merged_node, "")
+            if self.display:
+                self.print_huffman_tree(merged_node, "")
 
         return heap[0]
 
@@ -91,15 +106,16 @@ class HuffmanFunctions:
 
         return result, huffman_pairs_encoded
 
-    def print_huffman_tree(self, node, val):
-        # huffman code for current node
-        # if node is not an edge node
-        if node.left:
-            self.print_huffman_tree(node.left, val + "0")
-        if node.right:
-            self.print_huffman_tree(node.right, val + "1")
-        if not node.left and not node.right:
-            print(f"{node.symbol} -> {val}")
+    def print_huffman_tree(self, node, branch):
+        if node.symbol is not None:
+            result = f"{node.symbol}:{node.freq},{branch}"
+            with open(self.file_tree, "a") as f:
+                f.write(f"{result}\n")
+            # print(result)
+        if node.left is not None:
+            self.print_huffman_tree(node.left, branch + "0")
+        if node.right is not None:
+            self.print_huffman_tree(node.right, branch + "1")
 
     def huffman_encoding(self, symbol_prob):
         root = self.build_huffman_tree(symbol_prob)
@@ -174,11 +190,6 @@ class HuffmanBrancher:
         lines = self.get_huffman_lines()
 
         resulting_nodes, noding = self.splitting_huffman_lines(lines)
-
-        # file_to_save = Path(root_folder, "MD_Reports", "assignment-2", self.output_file)
-        # print(f"file: {file_to_save}")
-
-        # self.save_tree_to_file(file_to_save, resulting_nodes)
 
         self.save_tree_to_file(self.output_file, resulting_nodes)
 

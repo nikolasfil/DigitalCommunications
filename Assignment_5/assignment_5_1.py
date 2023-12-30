@@ -1,20 +1,16 @@
 from collections import defaultdict
 from pathlib import Path
 import math
-from assignment_2 import (
-    print_codes,
-    turn_into_same_length,
-    get_combinations,
-)
 
 from assignment_1_class import Assignment1
+from assignment_2_class import Assignment2
 
 # from assignment_1_2 import H
 
 
 class Assignment5:
     def __init__(self, file=None, individual=False) -> None:
-        self.result = []
+        self.result = ["---\nnum: 5\n---\n"]
         self.individual = individual
         if file is None:
             self.open_file = "words.txt"
@@ -28,7 +24,29 @@ class Assignment5:
         self.method_list = [func for func in dir(self) if callable(getattr(self, func))]
 
         self.assignment_1 = Assignment1(individual=self.individual)
+        self.assignment_2 = Assignment2(individual=self.individual, display=False)
         # self.main()
+
+    def mdreporting(self, assignment, file_name):
+        parent_folder = Path(__file__).parent
+        root_folder = Path(parent_folder.parent)
+
+        file = Path(root_folder, "MD_Reports", assignment, file_name)
+
+        return file
+
+    def mdreporting(self, assignment, file_name):
+        parent_folder = Path(__file__).parent
+        root_folder = Path(parent_folder.parent)
+
+        file = Path(root_folder, "MD_Reports", assignment, file_name)
+
+        return file
+
+    def samefolder(self, file_name):
+        parent_folder = Path(__file__).parent
+        file = Path(parent_folder, file_name)
+        return file
 
     def main(self):
         self.initializations()
@@ -105,13 +123,17 @@ class Assignment5:
 
         self.combinations_dict = self.output
 
-        self.comb_same_length = turn_into_same_length(self.combinations_dict)
+        self.comb_same_length = self.assignment_2.turn_into_same_length(
+            self.combinations_dict
+        )
         self.comb_same_length = {
             key: value[1:] for key, value in self.comb_same_length.items()
         }
         # print(comb_same_length)
 
-        self.comb_same_length_info = print_codes(self.comb_same_length)
+        self.comb_same_length_info = self.assignment_2.print_codes(
+            self.comb_same_length
+        )
         self.result.append(self.comb_same_length_info)
 
         # Data encoding with code of the same length :
@@ -126,25 +148,46 @@ class Assignment5:
         self.result.append("\n\n---\n\n")
 
     def main_3(self):
-        self.combinations_info, self.combinations = get_combinations(
-            self.letter_frequency
+        self.result.append("\n\n## Assignment-5-3\n\n")
+
+        combinations_info, combinations_dict = self.assignment_2.get_combinations(
+            self.output
+        )
+        self.result.append(combinations_info)
+
+        # Bad previous coding forces me to do this
+        self.output = self.assignment_2.change_to_numbering(self.output)
+
+        # so this one will be in a1 instead of single lettering but it should be  fun to rerun it and just save again the table from the probabilities and just copy paste it
+
+        combinations_info, combinations_dict = self.assignment_2.get_combinations(
+            self.output
         )
 
-        # result.append(combinations_info)
+        self.result.append(combinations_info)
 
-        # comb_same_length_info = print_codes(comb_same_length)
-        # result.append(comb_same_length_info)
+        (
+            huffman_encoded_info,
+            huffman_encoded_value,
+        ) = self.assignment_2.huffman_functions.huffman_encode_pairs(combinations_dict)
+
+        # print(huffman_encoded_info)
+        self.result.append(huffman_encoded_info)
+
+        self.result.append("\n\n---\n\n")
+
+    def main_4(self):
+        # # self.brancher = self.assignment_2.;\
+        # self.bracker = self.assignment_2.HuffmanBrancher(
+        #      self.assignment_2.file_tree,
+        # )
+        print(self.assignment_2.brancher.file_tree)
 
     def resulting(self):
         # --------------- Results  --------------------
-        print("\n".join(self.result))
+        # print("\n".join(self.result))
 
-        immediate_parent = Path(__file__).parent
-        root_folder = Path(immediate_parent.parent)
-
-        file_to_save = Path(
-            root_folder, "MD_Reports", "assignment-5", "assignment-5-1-code-result.md"
-        )
+        file_to_save = self.mdreporting("assignment-5", "assignment-5-1-code-result.md")
 
         self.assignment_1.save_to_file(file_to_save, self.result)
 

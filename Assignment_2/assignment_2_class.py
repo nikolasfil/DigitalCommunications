@@ -1,5 +1,4 @@
 from pathlib import Path
-from assignment_1_class import Assignment1
 
 import math
 from assignment_2_huffman_functions_class import HuffmanFunctions, HuffmanBrancher
@@ -7,15 +6,18 @@ from efficiency_plotter import plotter
 
 
 class Assignment2:
-    def __init__(self, file=None, individual=False) -> None:
-        self.result = [f"---\nnum: {2} \n---\n\n"]
+    def __init__(self, file=None, individual=False, display=None) -> None:
+        self.result = [f"---\nnum: {2} \n---\n"]
         self.individual = individual
+        if display:
+            self.display = display
+        else:
+            self.display = False
 
         # Getting the functions to run :
         self.method_list = [func for func in dir(self) if callable(getattr(self, func))]
 
-        self.assignment_1 = Assignment1(individual=self.individual)
-        self.huffman_functions = HuffmanFunctions()
+        self.huffman_functions = HuffmanFunctions(display=self.display)
         self.brancher = HuffmanBrancher(
             "huffman_tree.txt", "assignment-2-huffman-tree.md"
         )
@@ -23,10 +25,21 @@ class Assignment2:
             self.file = file
         else:
             self.file = "assignment-2-code-result.md"
+
+        self.file = self.mdreporting("assignment-2", self.file)
+
+    def mdreporting(self, assignment, file_name):
         parent_folder = Path(__file__).parent
         root_folder = Path(parent_folder.parent)
 
-        self.file = Path(root_folder, "MD_Reports", "assignment-2", self.file)
+        file = Path(root_folder, "MD_Reports", assignment, file_name)
+
+        return file
+
+    def samefolder(self, file_name):
+        parent_folder = Path(__file__).parent
+        file = Path(parent_folder, file_name)
+        return file
 
     def main(self):
         self.initializations()
@@ -42,7 +55,12 @@ class Assignment2:
         # --------------- Results  --------------------
         print("\n".join(self.result))
 
-        self.assignment_1.save_to_file(self.file, self.result)
+        self.save_to_file(self.file, self.result)
+
+    def save_to_file(self, file_name, result):
+        with open(file_name, "w") as file:
+            # file.write("\n\n")
+            file.write("\n".join(result))
 
     def change_to_numbering(self, dictionary):
         result = {}
