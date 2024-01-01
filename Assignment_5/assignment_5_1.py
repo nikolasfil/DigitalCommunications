@@ -4,6 +4,7 @@ import math
 
 from assignment_1_class import Assignment1
 from assignment_2_class import Assignment2
+from assignment_5_plotter import plotting
 
 # from assignment_1_2 import H
 
@@ -177,7 +178,7 @@ class Assignment5:
 
         self.result.append("\n\n---\n\n")
 
-    def main_4(self):
+    def not_main_4(self):
         # # self.brancher = self.assignment_2.;\
         # self.bracker = self.assignment_2.HuffmanBrancher(
         #      self.assignment_2.file_tree,
@@ -196,6 +197,28 @@ class Assignment5:
 
         print(huffman_codes)
         # self.result.append("\n\n## Assignment-5-4\n\n")
+
+    def main_8(self):
+        # Define the points
+        points = []
+
+        points1 = [
+            (1, 0),
+            (1, -(math.sqrt(2) / 2)),
+            (2, -(math.sqrt(2) / 2)),
+            (2, (math.sqrt(2) / 2)),
+            (3, (math.sqrt(2) / 2)),
+            (3, 0),
+        ]
+        points.append(points1)
+
+        points2 = [(1,)]
+
+        for i, point_list in enumerate(points):
+            file = self.samefolder(f"assignment-5-8-plot-{i}.png")
+            plotting(point_list, titling=f"Graph of f{i}(4-t)", show=False, file=file)
+
+        points2 = [()]
 
     def resulting(self):
         # --------------- Results  --------------------
