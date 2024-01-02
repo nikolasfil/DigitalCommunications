@@ -190,30 +190,65 @@ class HuffmanBrancher:
         # The result
         resulting_nodes = []
         noding = []
-        numbering_nodes = {}
+
+        topper = ""
+        previous_definitions = []
+        previous_connections = []
+        previous_connectings = {}
 
         for line in lines:
             noding.append([line.split(",")[0].split(":"), line.split(",")[1]])
             id_name = line.split(",")[0].split(":")[0]
             display_name = line.split(",")[0]
-            branch = line.split(",")[1]
-            temp_result = f'{id_name}["{display_name}"] \n\n-- {branch} -->  \n\n'
+
+            branch = line.strip("\n").split(",")[1]
+
+            temp_result = ""
+            temp_connection = ""
+
+            temp_definition = f'{id_name}["{display_name}"] \n'
+
+            # Adds the definition only if it has not been already added
+            if temp_definition in previous_definitions:
+                temp_definition = ""
+            else:
+                previous_definitions.append(temp_definition)
+
+            if branch == "":
+                # checks if the branch is a leaf
+                topper = id_name
+            else:
+                temp_connection = f"{id_name} -- {branch} -->  {topper}\n"
+
+                if temp_connection in previous_connections:
+                    temp_connection = ""
+                else:
+                    previous_connections.append(temp_connection)
+
+                if id_name not in previous_connectings:
+                    previous_connectings[id_name] = 1
+
+                if branch in ["0", "1"]:
+                    if previous_connectings[id_name] == 2:
+                        temp_connection = ""
+                    elif previous_connectings[id_name] < 2:
+                        previous_connectings[id_name] += 1
+                else:
+                    temp_connection = ""
+
+            # Discard the empty lines
+            temp_result = "\n".join([temp_definition, temp_connection])
+            if temp_connection == "" and temp_definition == "":
+                temp_result = ""
 
             resulting_nodes.append(temp_result)
-
-            # num = len(id_name)//4
-            # if num not in numbering_nodes.keys():
-            #     numbering_nodes[num] = set()
-            # numbering_nodes[num].add(id_name)
-
-        # print(numbering_nodes)
 
         return resulting_nodes, noding
 
     def save_tree_to_file(self, file, noding):
         with open(file, "w") as f:
             f.write("---\nnum: 2\n---\n\n")
-            f.write("```mermaid\ngraph LR; \n")
+            f.write("```\nmermaid\ngraph LR; \n")
             for node in noding:
                 f.write(node)
             f.write("\n```\n")
