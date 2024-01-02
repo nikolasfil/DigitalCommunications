@@ -29,7 +29,10 @@ def plotting(points, file=None, titling=None, show=True):
         plt.show()
 
     if file:
-        plt.save(file, dpi=300, bbox_inches="tight")
+        plt.savefig(file, dpi=300, bbox_inches="tight")
+
+    # Close the plot
+    plt.close()
 
 
 if __name__ == "__main__":

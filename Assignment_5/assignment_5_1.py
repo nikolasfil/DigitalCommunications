@@ -36,14 +36,6 @@ class Assignment5:
 
         return file
 
-    def mdreporting(self, assignment, file_name):
-        parent_folder = Path(__file__).parent
-        root_folder = Path(parent_folder.parent)
-
-        file = Path(root_folder, "MD_Reports", assignment, file_name)
-
-        return file
-
     def samefolder(self, file_name):
         parent_folder = Path(__file__).parent
         file = Path(parent_folder, file_name)
@@ -63,6 +55,12 @@ class Assignment5:
             self.dict_of_interest,
             # ) = sharing_data(list("αβγδ"), self.file, self.individual)
         ) = self.assignment_1.sharing_data(list("αβγδ"), self.file, self.individual)
+
+        # self.assignment_2.brancher.output_file = self.samefolder("assignment-5-4.txt")
+        self.assignment_2.brancher.output_file = self.mdreporting( 
+            "assignment-5", "assignment-5-huffman-tree.md"
+        )
+        )
 
     def H(sekf, list_of_probabilities):
         """This function will return the entropy of a given probability"""
@@ -148,7 +146,7 @@ class Assignment5:
 
         self.result.append("\n\n---\n\n")
 
-    def main_3(self):
+    def not_main_3(self):
         self.result.append("\n\n## Assignment-5-3\n\n")
 
         combinations_info, combinations_dict = self.assignment_2.get_combinations(
@@ -189,20 +187,82 @@ class Assignment5:
             self.origianl_output, self.output
         )
 
-        print(self.output)
-
         huffman_codes = self.assignment_2.huffman_functions.huffman_encoding(
             self.output
         )
 
-        print(huffman_codes)
         # self.result.append("\n\n## Assignment-5-4\n\n")
 
-    def main_8(self):
+    def main_3_1(self):
+        self.result.append("\n\n## Assignment-5-3\n\n")
+
+        # self.output = self.origianl_output
+        self.output_2 = self.output
+
+        self.output_huffman_codes = self.assignment_2.huffman_functions.huffman(
+            self.output
+        )
+        self.output_huffman_codes = self.assignment_2.change_to_numbering(
+            self.output_huffman_codes
+        )
+
+        self.output = self.assignment_2.change_to_numbering(self.output)
+        self.result.append("\n\n---\n\n")
+
+    def main_3_2(self):
+        combinations_info, self.combinations_dict = self.assignment_2.get_combinations(
+            self.output
+        )
+
+        self.result.append(combinations_info)
+
+        (
+            huffman_encoded_info,
+            huffman_encoded_value,
+        ) = self.assignment_2.huffman_functions.huffman_encode_pairs(
+            self.combinations_dict
+        )
+
+        # print(huffman_encoded_info)
+        self.result.append(huffman_encoded_info)
+
+        huffman_h_info, huffman_h_value = self.assignment_2.H_info(
+            self.combinations_dict
+        )
+
+        self.result.append(huffman_h_info)
+
+        huffman_r_info, huffman_r_value = self.assignment_2.R_info(
+            huffman_encoded_value, self.combinations_dict
+        )
+
+        self.result.append(huffman_r_info)
+
+        huffman_n_info, huffman_n_value = self.assignment_2.n_info(
+            huffman_h_value, self.h_value
+        )
+
+        self.result.append(huffman_n_info)
+
+        lines = self.assignment_2.brancher.get_huffman_lines()
+        (
+            self.resulting_nodes,
+            noding,
+        ) = self.assignment_2.brancher.splitting_huffman_lines(lines)
+
+        self.assignment_2.brancher.save_tree_to_file(
+            self.assignment_2.brancher.output_file, self.resulting_nodes
+        )
+
+        self.result.append("\n\n---\n\n")
+
+    def done_main_8(self):
+        # Only needed to run once
+
         # Define the points
         points = []
 
-        points1 = [
+        points_ = [
             (1, 0),
             (1, -(math.sqrt(2) / 2)),
             (2, -(math.sqrt(2) / 2)),
@@ -210,15 +270,20 @@ class Assignment5:
             (3, (math.sqrt(2) / 2)),
             (3, 0),
         ]
-        points.append(points1)
+        points.append(points_)
 
-        points2 = [(1,)]
+        points_ = [(1, 0), (1, (math.sqrt(2) / 2)), (3, (math.sqrt(2) / 2)), (3, 0)]
+        points.append(points_)
+
+        points_ = [(0, -1), (1, -1), (1, 0)]
+        points.append(points_)
+
+        points_ = [(3, 0), (3, 1), (4, 1), (4, 0)]
+        points.append(points_)
 
         for i, point_list in enumerate(points):
-            file = self.samefolder(f"assignment-5-8-plot-{i}.png")
-            plotting(point_list, titling=f"Graph of f{i}(4-t)", show=False, file=file)
-
-        points2 = [()]
+            file = self.samefolder(f"assignment-5-8-plot-{i+1}.png")
+            plotting(point_list, titling=f"Graph of f{i+1}(4-t)", show=False, file=file)
 
     def resulting(self):
         # --------------- Results  --------------------
