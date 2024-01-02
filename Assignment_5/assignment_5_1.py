@@ -57,9 +57,8 @@ class Assignment5:
         ) = self.assignment_1.sharing_data(list("αβγδ"), self.file, self.individual)
 
         # self.assignment_2.brancher.output_file = self.samefolder("assignment-5-4.txt")
-        self.assignment_2.brancher.output_file = self.mdreporting( 
+        self.assignment_2.brancher.output_file = self.mdreporting(
             "assignment-5", "assignment-5-huffman-tree.md"
-        )
         )
 
     def H(sekf, list_of_probabilities):
