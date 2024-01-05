@@ -227,11 +227,10 @@ class HuffmanBrancher:
 
                 if id_name not in previous_connectings:
                     previous_connectings[id_name] = 1
-
                 if branch in ["0", "1"]:
                     if previous_connectings[id_name] == 2:
                         temp_connection = ""
-                    elif previous_connectings[id_name] < 2:
+                    else:
                         previous_connectings[id_name] += 1
                 else:
                     temp_connection = ""

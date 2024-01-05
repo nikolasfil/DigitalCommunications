@@ -106,10 +106,10 @@ class Assignment5:
 
         self.h_info, self.h_value = self.H(list(self.output.values()))
 
-        self.output = {
-            key: round(value / self.n_letter, 3)
-            for key, value in self.letter_frequency.items()
-        }
+        # self.output = {
+        #     key: round(value / self.n_letter, 3)
+        #     for key, value in self.letter_frequency.items()
+        # }
 
         self.result.append(self.h_info)
 
@@ -142,36 +142,6 @@ class Assignment5:
         self.result.append(
             f"\n\nData encoding with code of the same length : \n\n {self.data} -> \n\n\{self.comb_data_encoding}\n\n"
         )
-
-        self.result.append("\n\n---\n\n")
-
-    def not_main_3(self):
-        self.result.append("\n\n## Assignment-5-3\n\n")
-
-        combinations_info, combinations_dict = self.assignment_2.get_combinations(
-            self.output
-        )
-        self.result.append(combinations_info)
-
-        # Bad previous coding forces me to do this
-        self.origianl_output = self.output
-        self.output = self.assignment_2.change_to_numbering(self.output)
-
-        # so this one will be in a1 instead of single lettering but it should be  fun to rerun it and just save again the table from the probabilities and just copy paste it
-
-        combinations_info, combinations_dict = self.assignment_2.get_combinations(
-            self.output
-        )
-
-        self.result.append(combinations_info)
-
-        (
-            huffman_encoded_info,
-            huffman_encoded_value,
-        ) = self.assignment_2.huffman_functions.huffman_encode_pairs(combinations_dict)
-
-        # print(huffman_encoded_info)
-        self.result.append(huffman_encoded_info)
 
         self.result.append("\n\n---\n\n")
 
@@ -215,6 +185,8 @@ class Assignment5:
 
         self.result.append(combinations_info)
 
+        # table_info, table_value = self.assignment_2.
+
         (
             huffman_encoded_info,
             huffman_encoded_value,
@@ -238,7 +210,7 @@ class Assignment5:
         self.result.append(huffman_r_info)
 
         huffman_n_info, huffman_n_value = self.assignment_2.n_info(
-            huffman_h_value, self.h_value
+            huffman_r_value, huffman_h_value
         )
 
         self.result.append(huffman_n_info)
@@ -283,6 +255,34 @@ class Assignment5:
         for i, point_list in enumerate(points):
             file = self.samefolder(f"assignment-5-8-plot-{i+1}.png")
             plotting(point_list, titling=f"Graph of f{i+1}(4-t)", show=False, file=file)
+
+    def main_7(self):
+        # Only needed to run once
+
+        # Define the points
+        points = []
+
+        points_ = [(1, 0), (0, 1)]
+        points.append(points_)
+
+        points_ = [(1, 0), (1, math.sqrt(2) / 2), (3, math.sqrt(2) / 2), (3, 0)]
+        points.append(points_)
+
+        points_ = [(3, 0), (3, -1), (4, -1), (4, 0)]
+        points.append(points_)
+
+        points_ = [(0, 1), (1, 1), (1, 0)]
+        points.append(points_)
+
+        for i, point_list in enumerate(points):
+            file = self.samefolder(f"assignment-5-5-plot-{i+1}.png")
+            plotting(
+                point_list,
+                titling=f"Graph of f{i+1}(t)",
+                show=False,
+                file=file,
+                label=f"f{i+1}(t)",
+            )
 
     def resulting(self):
         # --------------- Results  --------------------

@@ -153,7 +153,8 @@ class Assignment2:
         result = (
             "$$\n n = \\frac{"
             + f"{pairs if pairs !=1 else ''}"
-            + "H(x)}{R} = "
+            # + "H(x)}{R} = "
+            + "R}{H(x)} = "
             + "\\frac{"
             + f"{pairs*h}"
             + "}{"
@@ -171,7 +172,8 @@ class Assignment2:
                 result_list.append((key_a, key_b))
         result_dict = {}
         for key in result_list:
-            result_dict["".join(key)] = round(output[key[0]] * output[key[1]], 3)
+            result_dict["".join(key)] = output[key[0]] * output[key[1]]
+            # result_dict["".join(key)] = round(output[key[0]] * output[key[1]], 3)
 
         result = f"\n\n| {'Combination':^15} | {'Probability':^15} |\n| {'-':^15} | {'-':^15} |\n"
         for key, value in result_dict.items():
