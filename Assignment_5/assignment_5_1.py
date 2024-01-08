@@ -217,7 +217,7 @@ class Assignment5:
 
         h_info, h_value = self.assignment_2.H_info(output)
 
-        print(output, self.comb_same_length)
+        # print(output, self.comb_same_length)
         r_info, r_value = self.assignment_2.R_info(self.comb_same_length, output)
 
         n_info, n_value = self.assignment_2.n_info(r_value, h_value)
@@ -245,7 +245,7 @@ class Assignment5:
         huffman_r_info, huffman_r_value = self.assignment_2.R_info(
             huffman_encoded_value, combinations_dict
         )
-        print(huffman_encoded_value, combinations_dict)
+        # print(huffman_encoded_value, combinations_dict)
 
         self.result.append(huffman_r_info)
 
@@ -285,13 +285,20 @@ class Assignment5:
             file = self.samefolder(f"assignment-5-8-plot-{i+1}.png")
             plotting(point_list, titling=f"Graph of f{i+1}(4-t)", show=False, file=file)
 
-    def main_7(self):
+    def done_main_5(self):
         # Only needed to run once
 
         # Define the points
         points = []
 
-        points_ = [(1, 0), (0, 1)]
+        points_ = [
+            (1, 0),
+            (1, (math.sqrt(2) / 2)),
+            (2, (math.sqrt(2) / 2)),
+            (2, (-math.sqrt(2) / 2)),
+            (3, (-math.sqrt(2) / 2)),
+            (3, 0),
+        ]
         points.append(points_)
 
         points_ = [(1, 0), (1, math.sqrt(2) / 2), (3, math.sqrt(2) / 2), (3, 0)]
@@ -312,6 +319,19 @@ class Assignment5:
                 file=file,
                 label=f"f{i+1}(t)",
             )
+
+    def done_main_9(self):
+        points_ = [(1, 0), (1, -1), (3, -1), (3, 0)]
+        file = self.samefolder(f"assignment-5-9-plot.png")
+        plotting(
+            points_,
+            titling=f"Graph of $S_3(t)$",
+            show=False,
+            file=file,
+            label="S_3(t)",
+            x_axis_name="t",
+            y_axis_name="$S_3(t)$",
+        )
 
     def resulting(self, printing: bool = True):
         # --------------- Results  --------------------

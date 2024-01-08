@@ -2,7 +2,15 @@ import matplotlib.pyplot as plt
 import math
 
 
-def plotting(points, file=None, titling=None, show=True, label=None):
+def plotting(
+    points,
+    file=None,
+    titling=None,
+    show=True,
+    label=None,
+    x_axis_name: str = "x",
+    y_axis_name: str = "y",
+):
     if label is None:
         label = "f(t)"
     # Extract x and y values from the points
@@ -30,8 +38,8 @@ def plotting(points, file=None, titling=None, show=True, label=None):
     plt.axhline(y=0, color="red", linestyle="--")
 
     # Set labels and title
-    plt.xlabel("x")
-    plt.ylabel("y")
+    plt.xlabel(x_axis_name)
+    plt.ylabel(y_axis_name)
     if not titling:
         titling = "Graph"
     plt.title(titling)
