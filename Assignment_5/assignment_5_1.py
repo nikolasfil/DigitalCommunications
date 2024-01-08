@@ -117,7 +117,7 @@ class Assignment5:
 
     def main_2(self):
         # Assignment 2 3
-        self.result.append("\n\n## Assignment-5-1-a\n\n")
+        self.result.append("\n\n## Assignment-5-2\n\n")
 
         self.combinations_dict = self.output
 
@@ -127,7 +127,6 @@ class Assignment5:
         self.comb_same_length = {
             key: value[1:] for key, value in self.comb_same_length.items()
         }
-        # print(comb_same_length)
 
         self.comb_same_length_info = self.assignment_2.print_codes(
             self.comb_same_length
@@ -185,8 +184,6 @@ class Assignment5:
 
         self.result.append(combinations_info)
 
-        # table_info, table_value = self.assignment_2.
-
         (
             huffman_encoded_info,
             huffman_encoded_value,
@@ -194,26 +191,7 @@ class Assignment5:
             self.combinations_dict
         )
 
-        # print(huffman_encoded_info)
         self.result.append(huffman_encoded_info)
-
-        huffman_h_info, huffman_h_value = self.assignment_2.H_info(
-            self.combinations_dict
-        )
-
-        self.result.append(huffman_h_info)
-
-        huffman_r_info, huffman_r_value = self.assignment_2.R_info(
-            huffman_encoded_value, self.combinations_dict
-        )
-
-        self.result.append(huffman_r_info)
-
-        huffman_n_info, huffman_n_value = self.assignment_2.n_info(
-            huffman_r_value, huffman_h_value
-        )
-
-        self.result.append(huffman_n_info)
 
         lines = self.assignment_2.brancher.get_huffman_lines()
         (
@@ -225,6 +203,57 @@ class Assignment5:
             self.assignment_2.brancher.output_file, self.resulting_nodes
         )
 
+        self.result.append("\n\n---\n\n")
+
+    def main_4_1(self):
+        self.result.append("\n\n## Assignment-5-4 \n\n")
+
+        # Use this variable that is already compiled
+        # self.comb_same_length
+        output = self.assignment_2.huffman_functions.replacing_keys(
+            self.output_2, self.output
+        )
+        i_info, i_value = self.assignment_2.I_info(output)
+
+        h_info, h_value = self.assignment_2.H_info(output)
+
+        print(output, self.comb_same_length)
+        r_info, r_value = self.assignment_2.R_info(self.comb_same_length, output)
+
+        n_info, n_value = self.assignment_2.n_info(r_value, h_value)
+
+        self.result.append(i_info)
+        self.result.append(h_info)
+        self.result.append(r_info)
+        self.result.append(n_info)
+
+    def main_4_2(self):
+        self.result.append("\n\n### Huffman Code  \n\n")
+        combinations_info, combinations_dict = self.assignment_2.get_combinations(
+            self.output
+        )
+
+        (
+            huffman_encoded_info,
+            huffman_encoded_value,
+        ) = self.assignment_2.huffman_functions.huffman_encode_pairs(combinations_dict)
+
+        huffman_h_info, huffman_h_value = self.assignment_2.H_info(combinations_dict)
+
+        self.result.append(huffman_h_info)
+
+        huffman_r_info, huffman_r_value = self.assignment_2.R_info(
+            huffman_encoded_value, combinations_dict
+        )
+        print(huffman_encoded_value, combinations_dict)
+
+        self.result.append(huffman_r_info)
+
+        huffman_n_info, huffman_n_value = self.assignment_2.n_info(
+            huffman_r_value, huffman_h_value
+        )
+
+        self.result.append(huffman_n_info)
         self.result.append("\n\n---\n\n")
 
     def done_main_8(self):
@@ -284,9 +313,12 @@ class Assignment5:
                 label=f"f{i+1}(t)",
             )
 
-    def resulting(self):
+    def resulting(self, printing: bool = True):
         # --------------- Results  --------------------
-        # print("\n".join(self.result))
+
+        printing = False
+        if printing:
+            print("\n".join(self.result))
 
         file_to_save = self.mdreporting("assignment-5", "assignment-5-1-code-result.md")
 
